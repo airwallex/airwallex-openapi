@@ -28,12 +28,12 @@ x-api-version: 2026-08-21
 
 ## Base URLs
 
-| Environment        | Base URL                          |
-| ------------------ | --------------------------------- |
-| Production         | `https://api.airwallex.com`       |
-| Demo (sandbox)     | `https://api-demo.airwallex.com`  |
+| Environment        | Base URL                            |
+| ------------------ | ----------------------------------- |
+| Production         | `https://api.airwallex.com`         |
+| Sandbox            | `https://api.sandbox.airwallex.com` |
 
-Build and test against the demo environment before switching to production.
+Build and test against the sandbox environment before switching to production.
 
 ## Vendor extensions
 
@@ -46,7 +46,7 @@ Beyond standard OpenAPI, the public spec carries a small set of extensions usefu
 | `x-enumDescriptions`     | schema                        | Per-enum-value descriptions (value → explanation).                  |
 | `x-examples`             | operation                     | Example requests and responses (including request `uri` and headers). |
 | `examples` (native OAS)  | request/response + parameters | Example requests and responses.                                     |
-| `x-badges`               | tag / operation               | Beta / Alpha / Deprecated badges.                                   |
+| `x-badges`               | tag / operation               | `Beta` / Deprecated badges.                                         |
 | `x-displayName`          | tag                           | Human-friendly resource names.                                      |
 | `x-tagGroups`            | root                          | Groups tags by API domain for navigation.                           |
 
