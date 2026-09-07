@@ -7,7 +7,7 @@ Canonical, versioned, machine-readable OpenAPI specifications for the
 
 The specs are **OpenAPI 3.1.0**. Make sure your tooling supports 3.1 (which
 aligns the schema model with JSON Schema 2020-12). Most modern generators and
-viewers — `openapi-generator`, Redocly, Swagger UI, Postman, Bruno — do.
+viewers (`openapi-generator`, Redocly, Swagger UI, Postman, Bruno) do.
 
 ## API versioning
 
@@ -46,7 +46,7 @@ Beyond standard OpenAPI, the public spec carries a small set of extensions usefu
 | `x-enumDescriptions`     | schema                        | Per-enum-value descriptions (value → explanation).                  |
 | `x-examples`             | operation                     | Example requests and responses (including request `uri` and headers). |
 | `examples` (native OAS)  | request/response + parameters | Example requests and responses.                                     |
-| `x-badges`               | tag / operation               | `Beta` / Deprecated badges.                                         |
+| `x-badges`               | tag / operation               | Badges for a feature's release phase: `Early access`, `Beta`, or `Deprecated` (GA carries no badge). See [Release phases](https://www.airwallex.com/docs/developer-tools/release-phases). |
 | `x-displayName`          | tag                           | Human-friendly resource names.                                      |
 | `x-tagGroups`            | root                          | Groups tags by API domain for navigation.                           |
 
@@ -56,7 +56,7 @@ Beyond standard OpenAPI, the public spec carries a small set of extensions usefu
 - Developer docs: <https://www.airwallex.com/docs>
 
 Spotted a problem with the spec or the API? [Open an
-issue](https://github.com/airwallex/openapi/issues) — we triage them here and
+issue](https://github.com/airwallex/openapi/issues). We triage them here and
 work internally with the owning teams to address them. For account-specific or
 urgent support, use the official support channels linked from the docs site. See
 [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
