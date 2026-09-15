@@ -56,7 +56,7 @@ Beyond standard OpenAPI, the public spec carries a small set of extensions usefu
 - Developer docs: <https://www.airwallex.com/docs>
 
 Spotted a problem with the spec or the API? [Open an
-issue](https://github.com/airwallex/openapi/issues). We triage them here and
+issue](https://github.com/airwallex/airwallex-openapi/issues). We triage them here and
 work internally with the owning teams to address them. For account-specific or
 urgent support, use the official support channels linked from the docs site. See
 [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
