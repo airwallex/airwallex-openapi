@@ -59,7 +59,7 @@
     },
     {
       "name": "Authentication > Authentication",
-      "description": "Airwallex uses an API key and Client ID to authenticate requests, keys are managed via the Airwallex Webapp. Do not share your API keys in publicly accessible areas such as GitHub, client-side code, and so forth.\n\nAll API requests must be made over HTTPS. Only [PCI-DSS recommended TLS versions and cipher suites](/docs/developer-tools/security/securing-connections-to-airwallex) are supported.",
+      "description": "Airwallex uses an API key and Client ID to authenticate requests. You authenticate by exchanging your API key and Client ID for a short-lived access token, then sending that token as `Authorization: Bearer <token>` on every subsequent call. The access token is valid for 30 minutes and can be reused until it expires. Do not call the authentication endpoint before each request. Track expiration using the `expires_at` field from the login response. To get an access token, call [Obtain an access token](/docs/api/authentication/api_access_token/login).\n\nYou can view and manage API keys in the [Airwallex web app](https://www.airwallex.com/app). Do not share your API key in publicly accessible places such as GitHub repositories, client-side code, and so forth. For guidance on scoping, storing, and rotating your keys, see [API key best practices](/docs/developer-tools/api/api-key-best-practices).\n\nAirwallex authorizes each request against the scopes attached to your API key. For the full catalog of key permissions, see [API key scopes](/docs/developer-tools/api/api-key-scopes).\n\nAll requests must be made over HTTPS. Only [PCI-DSS recommended TLS versions and cipher suites](/docs/developer-tools/security/securing-connections-to-airwallex) are supported.",
       "x-displayName": "API Access Token"
     },
     {
@@ -4017,7 +4017,7 @@
                   },
                   "line_items": {
                     "type": "array",
-                    "description": "A list of items the customer is purchasing. Required when the mode is `SUBSCRIPTION` or `PAYMENT`. Not applicable when the mode is `SETUP`.  \nFor `SUBSCRIPTION` mode, all the line items must have a recurring Price.  \nFor `PAYMENT` mode, all the line items must have a non-recurring Price.",
+                    "description": "A list of items the customer is purchasing. Required when the mode is `SUBSCRIPTION` or `PAYMENT`. Not applicable when the mode is `SETUP`.  \nFor `SUBSCRIPTION` mode, all the line items must have a recurring Price or Rate Card Version.  \nFor `PAYMENT` mode, all the line items must have a non-recurring Price.",
                     "items": {
                       "type": "object",
                       "properties": {
@@ -4146,7 +4146,7 @@
                         },
                         "price_id": {
                           "type": "string",
-                          "description": "ID of the [Price](/docs/api/billing/prices) object. Exactly one of `price_id` or `price` is required."
+                          "description": "ID of the [Price](/docs/api/billing/prices) object. Exactly one of `price_id`, `price`, or `rate_card_id` is required."
                         },
                         "quantity": {
                           "minimum": 1,
@@ -4368,6 +4368,10 @@
                         "price_id": "pri_hkpd7fedfgb004apkvs",
                         "quantity": 1,
                         "tax_percent": 5
+                      },
+                      {
+                        "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                        "rate_card_version": 1
                       }
                     ],
                     "linked_payment_account_id": "acct_ncI2nypPKSq2VXKxscAcg",
@@ -4479,6 +4483,10 @@
                           "price_id": "pri_hkpd7fedfgb004apkvs",
                           "quantity": 1,
                           "tax_percent": 5
+                        },
+                        {
+                          "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                          "rate_card_version": 1
                         }
                       ],
                       "linked_payment_account_id": "acct_ncI2nypPKSq2VXKxscAcg",
@@ -4624,6 +4632,10 @@
                   "price_id": "pri_hkpd7fedfgb004apkvs",
                   "quantity": 1,
                   "tax_percent": 5
+                },
+                {
+                  "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                  "rate_card_version": 1
                 }
               ],
               "linked_payment_account_id": "acct_ncI2nypPKSq2VXKxscAcg",
@@ -4720,6 +4732,10 @@
                   "price_id": "pri_hkpd7fedfgb004apkvs",
                   "quantity": 1,
                   "tax_percent": 5
+                },
+                {
+                  "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                  "rate_card_version": 1
                 }
               ],
               "linked_payment_account_id": "acct_ncI2nypPKSq2VXKxscAcg",
@@ -12576,9 +12592,6 @@
                     "type": "array",
                     "description": "List of Subscription Items to be used for generating the invoice.",
                     "items": {
-                      "required": [
-                        "price_id"
-                      ],
                       "type": "object",
                       "properties": {
                         "discounts": {
@@ -12616,7 +12629,7 @@
                         },
                         "price_id": {
                           "type": "string",
-                          "description": "ID of the [Price](/docs/api/billing/prices) subscribed by the customer. The Price's `recurring` values must match the `recurring` values set out in this subscription."
+                          "description": "ID of the [Price](/docs/api/billing/prices) subscribed by the customer. The Price's `recurring` values must match the `recurring` values set out in this subscription. Exactly one of `price_id` or `rate_card_id` is required."
                         },
                         "quantity": {
                           "minimum": 1,
@@ -12680,6 +12693,10 @@
                         "price_id": "pri_sgpd7fedwse004apedr",
                         "quantity": 1,
                         "tax_percent": 5
+                      },
+                      {
+                        "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                        "rate_card_version": 3
                       }
                     ],
                     "legal_entity_id": "le_ib2DZgZJN72T7bObvNuMYQ",
@@ -12882,6 +12899,10 @@
                   "price_id": "pri_sgpd7fedwse004apedr",
                   "quantity": 1,
                   "tax_percent": 5
+                },
+                {
+                  "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                  "rate_card_version": 3
                 }
               ],
               "legal_entity_id": "le_ib2DZgZJN72T7bObvNuMYQ",
@@ -15274,6 +15295,10 @@
                       "items": [
                         {
                           "billing_customer_id": "bcus_1234567890abcdef",
+                          "dimension_values": {
+                            "model": "gpt-5.4",
+                            "token_type": "input"
+                          },
                           "event_count": 100,
                           "from_happened_at": "2022-01-01T00:00:00+0000",
                           "meter_id": "mtr_1234567890abcdef",
@@ -15323,6 +15348,10 @@
               "items": [
                 {
                   "billing_customer_id": "bcus_1234567890abcdef",
+                  "dimension_values": {
+                    "model": "gpt-5.4",
+                    "token_type": "input"
+                  },
                   "event_count": 100,
                   "from_happened_at": "2022-01-01T00:00:00+0000",
                   "meter_id": "mtr_1234567890abcdef",
@@ -17974,7 +18003,7 @@
                             "currency"
                           ],
                           "type": "object",
-                          "description": "One-time price definition following the same schema as the [Price](/docs/api/billing/prices) resource. Exactly one of `price_id` or `price` is required.",
+                          "description": "One-time price definition following the same schema as the [Price](/docs/api/billing/prices) resource. Exactly one of `price_id`, `price`, or `rate_card_id` is required.",
                           "properties": {
                             "currency": {
                               "type": "string",
@@ -18061,7 +18090,7 @@
                         },
                         "price_id": {
                           "type": "string",
-                          "description": "ID of the [Price](/docs/api/billing/prices) subscribed by the customer. All Prices in the subscription must have recurring frequencies that are compatible - meaning they must be exact multiples or divisors of one another (e.g., `1 MONTH` and `1 YEAR` are compatible; `1 WEEK` and `1 MONTH` are not). Exactly one of `price_id` or `price` is required."
+                          "description": "ID of the [Price](/docs/api/billing/prices) subscribed by the customer. All Prices in the subscription must have recurring frequencies that are compatible - meaning they must be exact multiples or divisors of one another (e.g., `1 MONTH` and `1 YEAR` are compatible; `1 WEEK` and `1 MONTH` are not). Exactly one of `price_id`, `price`, or `rate_card_id` is required."
                         },
                         "quantity": {
                           "minimum": 1,
@@ -18200,6 +18229,10 @@
                         "price_id": "pri_hkpd7fedfgb004apkvs",
                         "quantity": 2,
                         "tax_percent": 5
+                      },
+                      {
+                        "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                        "rate_card_version": 2
                       }
                     ],
                     "legal_entity_id": "le_ib2DZgZJN72T7bObvNuMYQ",
@@ -18401,6 +18434,10 @@
                   "price_id": "pri_hkpd7fedfgb004apkvs",
                   "quantity": 2,
                   "tax_percent": 5
+                },
+                {
+                  "rate_card_id": "rtc_hkpd8gfdghc115bqlwt",
+                  "rate_card_version": 2
                 }
               ],
               "legal_entity_id": "le_ib2DZgZJN72T7bObvNuMYQ",
@@ -30810,9 +30847,16 @@
                   "type"
                 ],
                 "properties": {
+                  "additional_fields": {
+                    "type": "array",
+                    "description": "List of additional fields to include as extra columns in the report, identified by field code. Additional fields add business-context columns to each report row to support reconciliation, as in the web app. Supported only for `TRANSACTION_RECON_REPORT` and `BALANCE_ACTIVITY_REPORT`; available field codes depend on the report type. Any field code that is invalid for the requested report type is rejected with an `invalid_argument` error, including codes supplied for a report type that does not support additional fields. See [Additional fields in financial reports](/docs/banking-as-a-service/reporting/financial-reports/additional-fields-in-financial-reports) for the list of supported field codes.",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
                   "currencies": {
                     "type": "array",
-                    "description": "Currencies to be included in the report. This filter is required for `ACCOUNT_STATEMENT_REPORT` and is supported as an optional filter for `BALANCE_ACTIVITY_REPORT` and `SETTLEMENT_REPORT`. Other report types do not support this filter.",
+                    "description": "Currencies to be included in the report. Required for `ACCOUNT_STATEMENT_REPORT` and supported as an optional filter for `BALANCE_ACTIVITY_REPORT` and `SETTLEMENT_REPORT`. Other report types do not support this filter.",
                     "items": {
                       "type": "string"
                     }
@@ -30905,18 +30949,41 @@
               "examples": {
                 "default": {
                   "value": {
+                    "additional_fields": [
+                      "issuing_card_nickname",
+                      "lending_credit_type"
+                    ],
                     "currencies": [
                       "AUD",
                       "USD",
                       "EUR"
                     ],
                     "file_format": "CSV",
-                    "file_name": "BALANCE_ACTIVITY_REPORT_2022_02_23.csv",
-                    "from_date": "2022-02-22",
+                    "file_name": "BALANCE_ACTIVITY_REPORT_2026_02_23.csv",
+                    "from_date": "2026-02-22",
+                    "to_date": "2026-02-25",
                     "report_options": {
                       "include_reservations": true
                     },
-                    "report_version": "1.0.0",
+                    "report_version": "1.2.0",
+                    "time_zone": "UTC",
+                    "transaction_types": [
+                      "CONVERSION"
+                    ],
+                    "type": "BALANCE_ACTIVITY_REPORT"
+                  }
+                },
+                "transaction_recon_report_with_additional_fields": {
+                  "value": {
+                    "additional_fields": [
+                      "issuing_card_nickname",
+                      "funding_type"
+                    ],
+                    "file_format": "EXCEL",
+                    "file_name": "TRANSACTION_RECON_REPORT_2026_02_23.xlsx",
+                    "from_date": "2026-02-22",
+                    "to_date": "2026-02-23",
+                    "report_version": "1.1.0",
                     "settlement_currencies": [
                       "AUD",
                       "USD",
@@ -30926,16 +30993,12 @@
                       "SETTLED"
                     ],
                     "time_zone": "UTC",
-                    "to_date": "2022-02-25",
                     "transaction_currencies": [
                       "AUD",
                       "USD",
                       "EUR"
                     ],
-                    "transaction_types": [
-                      "CONVERSION"
-                    ],
-                    "type": "BALANCE_ACTIVITY_REPORT"
+                    "type": "TRANSACTION_RECON_REPORT"
                   }
                 }
               }
@@ -30956,25 +31019,41 @@
                   "default": {
                     "value": {
                       "file_format": "CSV",
-                      "file_name": "BALANCE_ACTIVITY_REPORT_2022_02_23.csv",
+                      "file_name": "BALANCE_ACTIVITY_REPORT_2026_02_23.csv",
                       "id": "ff13f14b-1624-4c24-b601-b4c018d2ea092",
-                      "report_expires_at": "2022-03-23T23:59:59+1100",
+                      "report_expires_at": "2026-03-23T23:59:59+1100",
                       "report_parameters": {
                         "currencies": [
                           "AUD",
                           "USD",
                           "EUR"
                         ],
-                        "from_date": "2022-02-22",
+                        "from_date": "2026-02-22",
                         "time_zone": "UTC",
-                        "to_date": "2022-02-25",
+                        "to_date": "2026-02-25",
                         "transaction_types": [
                           "conversion"
                         ]
                       },
-                      "report_version": "1.0.0",
+                      "report_version": "1.2.0",
                       "status": "COMPLETED",
                       "type": "BALANCE_ACTIVITY_REPORT"
+                    }
+                  },
+                  "transaction_recon_report_with_additional_fields": {
+                    "value": {
+                      "file_format": "EXCEL",
+                      "file_name": "TRANSACTION_RECON_REPORT_2026_02_23.xlsx",
+                      "id": "8b2e4f1a-3c7d-4e9a-9f21-0a1b2c3d4e5f",
+                      "report_expires_at": "2026-03-23T23:59:59+1100",
+                      "report_parameters": {
+                        "from_date": "2026-02-22",
+                        "time_zone": "UTC",
+                        "to_date": "2026-02-23"
+                      },
+                      "report_version": "1.1.0",
+                      "status": "COMPLETED",
+                      "type": "TRANSACTION_RECON_REPORT"
                     }
                   }
                 }
@@ -31015,7 +31094,7 @@
         "x-examples": [
           {
             "key": "default",
-            "name": "",
+            "name": "Balance activity report",
             "method": "POST",
             "uri": "/api/v1/finance/financial_reports/create",
             "request_headers": {
@@ -31025,18 +31104,73 @@
             "status_code": 200,
             "reason_phrase": "OK",
             "request_body": {
+              "additional_fields": [
+                "issuing_card_nickname",
+                "lending_credit_type"
+              ],
               "currencies": [
                 "AUD",
                 "USD",
                 "EUR"
               ],
               "file_format": "CSV",
-              "file_name": "BALANCE_ACTIVITY_REPORT_2022_02_23.csv",
-              "from_date": "2022-02-22",
+              "file_name": "BALANCE_ACTIVITY_REPORT_2026_02_23.csv",
+              "from_date": "2026-02-22",
+              "to_date": "2026-02-25",
               "report_options": {
                 "include_reservations": true
               },
-              "report_version": "1.0.0",
+              "report_version": "1.2.0",
+              "time_zone": "UTC",
+              "transaction_types": [
+                "CONVERSION"
+              ],
+              "type": "BALANCE_ACTIVITY_REPORT"
+            },
+            "response_body": {
+              "file_format": "CSV",
+              "file_name": "BALANCE_ACTIVITY_REPORT_2026_02_23.csv",
+              "id": "ff13f14b-1624-4c24-b601-b4c018d2ea092",
+              "report_expires_at": "2026-03-23T23:59:59+1100",
+              "report_parameters": {
+                "currencies": [
+                  "AUD",
+                  "USD",
+                  "EUR"
+                ],
+                "from_date": "2026-02-22",
+                "time_zone": "UTC",
+                "to_date": "2026-02-25",
+                "transaction_types": [
+                  "conversion"
+                ]
+              },
+              "report_version": "1.2.0",
+              "status": "COMPLETED",
+              "type": "BALANCE_ACTIVITY_REPORT"
+            }
+          },
+          {
+            "key": "transaction_recon_report_with_additional_fields",
+            "name": "Transaction reconciliation report",
+            "method": "POST",
+            "uri": "/api/v1/finance/financial_reports/create",
+            "request_headers": {
+              "Authorization": "Bearer {{ACCESS_TOKEN}}",
+              "Content-Type": "application/json"
+            },
+            "status_code": 200,
+            "reason_phrase": "OK",
+            "request_body": {
+              "additional_fields": [
+                "issuing_card_nickname",
+                "funding_type"
+              ],
+              "file_format": "EXCEL",
+              "file_name": "TRANSACTION_RECON_REPORT_2026_02_23.xlsx",
+              "from_date": "2026-02-22",
+              "to_date": "2026-02-23",
+              "report_version": "1.1.0",
               "settlement_currencies": [
                 "AUD",
                 "USD",
@@ -31046,38 +31180,26 @@
                 "SETTLED"
               ],
               "time_zone": "UTC",
-              "to_date": "2022-02-25",
               "transaction_currencies": [
                 "AUD",
                 "USD",
                 "EUR"
               ],
-              "transaction_types": [
-                "CONVERSION"
-              ],
-              "type": "BALANCE_ACTIVITY_REPORT"
+              "type": "TRANSACTION_RECON_REPORT"
             },
             "response_body": {
-              "file_format": "CSV",
-              "file_name": "BALANCE_ACTIVITY_REPORT_2022_02_23.csv",
-              "id": "ff13f14b-1624-4c24-b601-b4c018d2ea092",
-              "report_expires_at": "2022-03-23T23:59:59+1100",
+              "file_format": "EXCEL",
+              "file_name": "TRANSACTION_RECON_REPORT_2026_02_23.xlsx",
+              "id": "8b2e4f1a-3c7d-4e9a-9f21-0a1b2c3d4e5f",
+              "report_expires_at": "2026-03-23T23:59:59+1100",
               "report_parameters": {
-                "currencies": [
-                  "AUD",
-                  "USD",
-                  "EUR"
-                ],
-                "from_date": "2022-02-22",
+                "from_date": "2026-02-22",
                 "time_zone": "UTC",
-                "to_date": "2022-02-25",
-                "transaction_types": [
-                  "conversion"
-                ]
+                "to_date": "2026-02-23"
               },
-              "report_version": "1.0.0",
+              "report_version": "1.1.0",
               "status": "COMPLETED",
-              "type": "BALANCE_ACTIVITY_REPORT"
+              "type": "TRANSACTION_RECON_REPORT"
             }
           }
         ],
@@ -35979,6 +36101,11 @@
                     ],
                     "description": "Card program.",
                     "properties": {
+                      "bin": {
+                        "type": "string",
+                        "pattern": "^\\d{6}(\\d{2})?$",
+                        "description": "Optional 6- or 8-digit network BIN. If provided, the requested BIN is used only if it is active, mapped to your program, and compatible with the card. Otherwise, the request is rejected with an `ineligible_bin` error. If omitted, Airwallex selects an eligible BIN automatically. Values that are not 6 or 8 digits return `invalid_bin_format`. This field is available only to accounts enabled for BIN selection. Contact your Airwallex Account Manager to request access."
+                      },
                       "interchange_percent": {
                         "type": "string",
                         "description": "Interchange percent of the card - This is only available for `sub_type=\"B2B_TRAVEL\"` cards. Interchange can vary from 0.8 to 1.9, with increments of 0.1."
@@ -36015,6 +36142,7 @@
                       "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                       "b0a1b145-4853-4456-b4b3-d690c7f3535c"
                     ],
+                    "auto_close_date": "2027-01-31",
                     "alert_settings": {
                       "low_remaining_transaction_limit": {
                         "enabled": false,
@@ -36133,6 +36261,7 @@
                         "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                         "b0a1b145-4853-4456-b4b3-d690c7f3535c"
                       ],
+                      "auto_close_date": "2027-01-31",
                       "alert_settings": {
                         "low_remaining_transaction_limit": {
                           "enabled": false,
@@ -36301,6 +36430,7 @@
                 "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                 "b0a1b145-4853-4456-b4b3-d690c7f3535c"
               ],
+              "auto_close_date": "2027-01-31",
               "alert_settings": {
                 "low_remaining_transaction_limit": {
                   "enabled": false,
@@ -36402,6 +36532,7 @@
                 "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                 "b0a1b145-4853-4456-b4b3-d690c7f3535c"
               ],
+              "auto_close_date": "2027-01-31",
               "alert_settings": {
                 "low_remaining_transaction_limit": {
                   "enabled": false,
@@ -37160,6 +37291,7 @@
                         "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                         "b0a1b145-4853-4456-b4b3-d690c7f3535c"
                       ],
+                      "auto_close_date": "2027-01-31",
                       "alert_settings": {
                         "low_remaining_transaction_limit": {
                           "enabled": false,
@@ -37328,6 +37460,7 @@
                 "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                 "b0a1b145-4853-4456-b4b3-d690c7f3535c"
               ],
+              "auto_close_date": "2027-01-31",
               "alert_settings": {
                 "low_remaining_transaction_limit": {
                   "enabled": false,
@@ -37692,6 +37825,7 @@
                       "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                       "b0a1b145-4853-4456-b4b3-d690c7f3535c"
                     ],
+                    "auto_close_date": "2027-01-31",
                     "alert_settings": {
                       "low_remaining_transaction_limit": {
                         "enabled": false,
@@ -37784,6 +37918,7 @@
                         "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                         "b0a1b145-4853-4456-b4b3-d690c7f3535c"
                       ],
+                      "auto_close_date": "2027-01-31",
                       "alert_settings": {
                         "low_remaining_transaction_limit": {
                           "enabled": false,
@@ -37938,6 +38073,7 @@
                 "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                 "b0a1b145-4853-4456-b4b3-d690c7f3535c"
               ],
+              "auto_close_date": "2027-01-31",
               "alert_settings": {
                 "low_remaining_transaction_limit": {
                   "enabled": false,
@@ -38013,6 +38149,7 @@
                 "7f687fe6-dcf4-4462-92fa-80335301d9d2",
                 "b0a1b145-4853-4456-b4b3-d690c7f3535c"
               ],
+              "auto_close_date": "2027-01-31",
               "alert_settings": {
                 "low_remaining_transaction_limit": {
                   "enabled": false,
@@ -129676,18 +129813,6 @@
         "summary": "1|Upload a File",
         "description": "Upload a file to Airwallex using this endpoint of the `files.airwallex.com` subdomain. The max size of upload file is up to 20MB. When you upload a file, the API responds with a `file_id`. This file unique identifier can then be referenced as required as part of the attachments object in our other endpoints.",
         "operationId": "upload",
-        "parameters": [
-          {
-            "name": "notes",
-            "in": "query",
-            "description": "The notes of the uploaded file, max length is 50 characters.",
-            "required": false,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -129698,6 +129823,10 @@
                     "description": "The file to upload, max length of filename is 50 characters.",
                     "type": "string",
                     "format": "binary"
+                  },
+                  "notes": {
+                    "description": "The notes of the uploaded file, max length is 50 characters.",
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -129707,7 +129836,8 @@
               "examples": {
                 "default": {
                   "value": {
-                    "file": "@your_file.pdf"
+                    "file": "@your_file.pdf",
+                    "notes": "<string>"
                   }
                 }
               }
@@ -129772,7 +129902,8 @@
             "status_code": 201,
             "reason_phrase": "Created",
             "request_body": {
-              "file": "@your_file.pdf"
+              "file": "@your_file.pdf",
+              "notes": "<string>"
             },
             "response_body": {
               "created": 0,
@@ -134048,8 +134179,7 @@
       },
       "CheckoutLineItem": {
         "required": [
-          "discounts",
-          "price_id"
+          "discounts"
         ],
         "type": "object",
         "properties": {
@@ -134064,7 +134194,7 @@
           },
           "price_id": {
             "type": "string",
-            "description": "ID of the Price object."
+            "description": "ID of the [Price](/docs/api/billing/prices) object. Mutually exclusive with `rate_card_id`."
           },
           "quantity": {
             "type": "integer",
@@ -136104,7 +136234,6 @@
           "discount_amounts",
           "id",
           "invoice_id",
-          "price",
           "updated_at"
         ],
         "type": "object",
@@ -136173,7 +136302,7 @@
           },
           "price": {
             "$ref": "#/components/schemas/PriceWithProduct",
-            "description": "Price subscribed by the customer."
+            "description": "Price subscribed by the customer. Mutually exclusive with `rate_card_item`."
           },
           "quantity": {
             "type": "integer",
@@ -136182,7 +136311,7 @@
           },
           "price_tier": {
             "$ref": "#/components/schemas/InvoiceItemPriceTier",
-            "description": "The price tier this line item belongs to. Only present for graduated or volume pricing."
+            "description": "The price tier this line item belongs to. Only present for graduated or volume pricing. Mutually exclusive with `rate_card_item_tier`."
           },
           "remaining_creditable_amount": {
             "type": "number",
@@ -136948,7 +137077,6 @@
           "applied_discounts",
           "created_at",
           "id",
-          "price",
           "subscription_id",
           "updated_at"
         ],
@@ -136987,7 +137115,7 @@
           },
           "price": {
             "$ref": "#/components/schemas/PriceWithProduct",
-            "description": "The price on a Subscription Item."
+            "description": "The price on a Subscription Item. Mutually exclusive with `rate_card_version`."
           },
           "quantity": {
             "type": "number",
