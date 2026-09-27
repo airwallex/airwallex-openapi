@@ -21820,6 +21820,10 @@ paths:
                 activate_on_issue:
                   type: boolean
                   description: Set this to `true` to activate the physical card when it is created. This will enable use of the card while it’s being delivered to the cardholder. Virtual cards will always be activated upon creation.
+                auto_close_date:
+                  type: string
+                  format: date
+                  description: If provided, the card is automatically closed at the start of the specified day (00:00 GMT). The date must be in the format YYYY-MM-DD and must be at least 1 day and no more than 5 years after the card is created. If not provided, the card is not automatically closed and follows the standard expiry and reissue behavior.
                 additional_cardholder_ids:
                   type: array
                   description: The IDs of additional cardholders to associate this card with. Only valid if `is_personalized` is `false`.
@@ -23025,6 +23029,10 @@ paths:
                               interval:
                                 type: string
                                 description: "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `ALL_TIME`."
+                auto_close_date:
+                  type: string
+                  format: date
+                  description: If provided, the card is automatically closed at the start of the specified day (00:00 GMT). The date must be in the format YYYY-MM-DD and must be at least 1 day and no more than 5 years after the update request is made. Set the field to null to clear the scheduled closure. If not provided, the current value is maintained.
                 card_status:
                   type: string
                   description: Card status, Allowed values are `INACTIVE`, `ACTIVE`, `CLOSED`.
@@ -84852,6 +84860,10 @@ components:
         activate_on_issue:
           type: boolean
           description: Set this to `true` to activate the physical card when it is created. This will enable use of the card while it’s being delivered to the cardholder. Virtual cards will always be activated upon creation.
+        auto_close_date:
+          type: string
+          format: date
+          description: The date on which the card is automatically closed, at the start of that day (00:00 GMT). The date is in the format YYYY-MM-DD. Returns `null` if no automatic closure is scheduled.
         additional_cardholder_ids:
           type: array
           description: The ID of additional cardholders of this card. Only valid if `is_personalized` is `false`.
@@ -94429,7 +94441,7 @@ components:
         supported_currencies:
           type: array
           deprecated: true
-          description: (Deprecated) Array of currency configurations.
+          description: Array of currency configurations.
           items:
             $ref: "#/components/schemas/SupportedCurrency"
         updated_at:
