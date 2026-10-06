@@ -83,8 +83,19 @@ tags:
       Prices are primarily used in [Invoice](/docs/api/billing/invoices) and [Subscription](/docs/api/billing/subscriptions) APIs.
     x-displayName: Prices
   - name: Billing > Products
-    description: A Product represents the good or service you offer to customers (e.g. books, memberships). When associated with [Prices](/docs/api/billing/prices), they can be used in [Invoice](/docs/api/billing/invoices) and [Subscription](/docs/api/billing/subscriptions) APIs.
+    description: Products represent the goods or services you offer to customers (e.g. books, memberships). When associated with [Prices](/docs/api/billing/prices), they can be used with the [Invoice](/docs/api/billing/invoices) and [Subscription](/docs/api/billing/subscriptions) APIs.
     x-displayName: Products
+  - name: Billing > Rate Cards
+    description: |-
+      A Rate Card is a versioned container for multi-dimensional pricing. It groups multiple Rate Card Items, each representing the price for one combination of dimensions (e.g. `model` × `token_type`), under shared billing fields (`product_id`, `meter_id`, `currency`, `recurring`). This lets you define pricing for an entire matrix for a single [Product](/docs/api/billing/products) and add it to a [Subscription](/docs/api/billing/subscriptions) as a single item, instead of creating one Price for each combination.
+
+      Pricing is organized in three layers:
+      - Rate Card — the container and its shared billing fields.
+      - Rate Card Version — an immutable snapshot of the pricing. Change pricing by publishing a new version; existing subscriptions stay pinned to the version they were created with.
+      - Rate Card Item — one entry in the matrix: the price for a specific set of `dimension_values`.
+
+      When usage is billed, each usage record is matched against the version's items in order and billed at the first item whose `dimension_values` match (an omitted key matches any value; an empty object matches all usage). So one Rate Card subscription item expands into one invoice line item per priced dimension combination that had usage.
+    x-displayName: Rate Cards
   - name: Billing > Subscriptions
     description: |-
       A Subscription manages the billing lifecycle for the recurring products or services that a customer purchases. One or more Products and Prices can be added as Subscription Items to a Subscription.
@@ -103,6 +114,13 @@ tags:
   - name: Billing > Usage Events
     description: A Usage Event represents a customer's usage of a product at a specific timestamp.
     x-displayName: Usage Events
+  - name: Checkout > Checkout Sessions
+    description: |-
+      A Checkout Session manages the setup and lifecycle of an Airwallex-hosted customer checkout experience, including billing subscriptions, one-off payments and payment setup flows.
+      We recommend creating a new Checkout Session each time a customer initiates a purchase. After the customer successfully completes the session, downstream resources such as Billing Customer, Customer, Payment Source, Payment Consent, Subscription, or Invoice may be created depending on the session mode.
+    x-badges:
+      - name: Early access
+    x-displayName: Checkout Sessions
   - name: Confirmation Letter > Confirmation Letter
     x-displayName: Confirmation Letter
   - name: Core Resources > Direct Debits
@@ -2551,6 +2569,8 @@ paths:
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
                     success_url: https://www.airwallex.com/success
                     ui_mode: HOSTED
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2025-05-10T16:00:30+0000
                     url: https://checkout.airwallex.com/pay?s=jwt_token
           description: OK
@@ -2832,6 +2852,13 @@ paths:
                         type: integer
                         description: The quantity of the line item being purchased. Defaults to `1`.
                         format: int32
+                      rate_card_id:
+                        type: string
+                        description: ID of the [Rate Card](/docs/api/billing/rate_cards) object. Exactly one of `price_id`, `price`, or `rate_card_id` is required. Only applicable to `SUBSCRIPTION` mode.
+                      rate_card_version:
+                        type: integer
+                        description: Pinned Rate Card version number. Required when `rate_card_id` is set.
+                        format: int32
                       tax_percent:
                         maximum: 100
                         minimum: 0
@@ -2956,6 +2983,13 @@ paths:
                 success_url:
                   type: string
                   description: The URL the customer will be directed to after the checkout completion.
+                ui_options:
+                  type: object
+                  description: UI configuration for the hosted checkout page.
+                  properties:
+                    theme_id:
+                      type: string
+                      description: ID of the theme to apply to this billing checkout, overriding the theme configured for its legal entity. You can find the theme ID in the Airwallex web app under Settings > Themes.
                 ui_mode:
                   pattern: ^(HOSTED|EMBEDDED|ELEMENTS)$
                   type: string
@@ -3044,6 +3078,8 @@ paths:
                     starts_at: 2023-01-01T00:00:00+0000
                     trial_ends_at: 2023-02-01T00:00:00+0000
                   success_url: https://www.airwallex.com/success
+                  ui_options:
+                    theme_id: tm_sgpdvff8whip0bfgzzt
                   ui_mode: HOSTED
         required: true
       responses:
@@ -3132,6 +3168,8 @@ paths:
                       trial_ends_at: 2023-02-01T00:00:00+0000
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
                     success_url: https://www.airwallex.com/success
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     ui_mode: HOSTED
                     updated_at: 2025-05-10T16:00:30+0000
                     url: https://checkout.airwallex.com/pay?s=jwt_token
@@ -3291,6 +3329,8 @@ paths:
                         subscription_id: sub_hkpdkcmxdgazzq53jbk
                         success_url: https://www.airwallex.com/success
                         ui_mode: HOSTED
+                        ui_options:
+                          theme_id: tm_sgpdvff8whip0bfgzzt
                         updated_at: 2025-05-10T16:00:30+0000
                         url: https://checkout.airwallex.com/pay?s=jwt_token
                     page_after: <string>
@@ -3416,6 +3456,8 @@ paths:
                       trial_ends_at: 2023-02-01T00:00:00+0000
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
                     success_url: https://www.airwallex.com/success
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     ui_mode: HOSTED
                     updated_at: 2025-05-10T16:00:30+0000
                     url: https://checkout.airwallex.com/pay?s=jwt_token
@@ -3561,6 +3603,8 @@ paths:
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
                     success_url: https://www.airwallex.com/success
                     ui_mode: HOSTED
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2025-05-10T16:00:30+0000
                     url: https://checkout.airwallex.com/pay?s=jwt_token
           description: OK
@@ -6283,6 +6327,8 @@ paths:
                       - amount: 10
                         applied_discount_id: disc_hkpdkcmxdgazzq53jbk
                     total_tax_amount: 0
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2022-01-01T10:15:30+0000
                     voided_at: 2022-12-05T10:15:30+0000
           description: OK
@@ -6437,6 +6483,13 @@ paths:
                   minLength: 0
                   type: string
                   description: Unique request ID specified by the merchant.
+                ui_options:
+                  type: object
+                  description: UI configuration for the digital invoice page.
+                  properties:
+                    theme_id:
+                      type: string
+                      description: ID of the theme to apply to this invoice, overriding the theme configured for its legal entity. You can find the theme ID in the Airwallex web app under Settings > Themes.
             examples:
               default:
                 value: &a81
@@ -6470,6 +6523,8 @@ paths:
                       - applepay
                   payment_source_id: psrc_d3Ds20ae5VihKs092
                   request_id: ee939540-3203-4a2c-9172-89a566485dd9
+                  ui_options:
+                    theme_id: tm_sgpdvff8whip0bfgzzt
         required: true
       responses:
         "201":
@@ -6549,6 +6604,8 @@ paths:
                     remaining_payment_attempt_count: 1
                     status: FINALIZED
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     total_amount: 100
                     total_discount_amounts:
                       - amount: 10
@@ -6742,6 +6799,8 @@ paths:
                       - amount: 10
                         applied_discount_id: disc_hkpdkcmxdgazzq53jbk
                     total_tax_amount: 0
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2022-01-01T10:15:30+0000
                     voided_at: 2022-12-05T10:15:30+0000
           description: OK
@@ -6862,6 +6921,8 @@ paths:
                     remaining_payment_attempt_count: 1
                     status: FINALIZED
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     total_amount: 100
                     total_discount_amounts:
                       - amount: 10
@@ -7027,6 +7088,8 @@ paths:
                           - amount: 10
                             applied_discount_id: disc_hkpdkcmxdgazzq53jbk
                         total_tax_amount: 0
+                        ui_options:
+                          theme_id: tm_sgpdvff8whip0bfgzzt
                         updated_at: 2022-01-01T10:15:30+0000
                         voided_at: 2022-12-05T10:15:30+0000
                     page_after: <string>
@@ -7374,6 +7437,8 @@ paths:
                       - amount: 10
                         applied_discount_id: disc_hkpdkcmxdgazzq53jbk
                     total_tax_amount: 0
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2022-01-01T10:15:30+0000
                     voided_at: 2022-12-05T10:15:30+0000
           description: OK
@@ -7457,6 +7522,8 @@ paths:
                     total_amount: 100
                     total_discount_amounts: []
                     total_tax_amount: 0
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2022-12-05T10:15:30+0000
           description: OK
         "400":
@@ -7574,6 +7641,13 @@ paths:
                         minimum: 1
                         type: integer
                         description: The product quantity. Defaults to `1`.
+                        format: int32
+                      rate_card_id:
+                        type: string
+                        description: ID of the [Rate Card](/docs/api/billing/rate_cards) object. Exactly one of `price_id` or `rate_card_id` is required.
+                      rate_card_version:
+                        type: integer
+                        description: Pinned Rate Card version number. Required when `rate_card_id` is set.
                         format: int32
                       tax_percent:
                         maximum: 100
@@ -7834,6 +7908,8 @@ paths:
                     remaining_payment_attempt_count: 1
                     status: FINALIZED
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     total_amount: 100
                     total_discount_amounts:
                       - amount: 10
@@ -8202,6 +8278,13 @@ paths:
                   description: |-
                     ID of the [Payment Source](/docs/api/billing/payment_sources) to pay for the invoice. Required when `collection_method` is `AUTO_CHARGE`.  
                     If `collection_method` is `CHARGE_ON_CHECKOUT`, a Payment Source is automatically created during invoice payment when `payment_options.payment_method_save.next_triggered_by` is `MERCHANT` and `payment_options.payment_method_save.mode` is `ENABLED`, or when it is `COLLECT_CONSENT` and the customer has given consent.
+                ui_options:
+                  type: object
+                  description: UI configuration for the digital invoice page.
+                  properties:
+                    theme_id:
+                      type: string
+                      description: ID of the theme to apply to this invoice, overriding the theme configured for its legal entity. You can find the theme ID in the Airwallex web app under Settings > Themes.
             examples:
               default:
                 value: &a98
@@ -8233,6 +8316,8 @@ paths:
                       - googlepay
                       - applepay
                   payment_source_id: psrc_d3Ds20ae5VihKs092
+                  ui_options:
+                    theme_id: tm_sgpdvff8whip0bfgzzt
         required: true
       responses:
         "200":
@@ -8305,6 +8390,8 @@ paths:
                     remaining_payment_attempt_count: 1
                     status: FINALIZED
                     subscription_id: sub_hkpdkcmxdgazzq53jbk
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     total_amount: 100
                     total_discount_amounts:
                       - amount: 10
@@ -8505,6 +8592,8 @@ paths:
                       - amount: 10
                         applied_discount_id: disc_hkpdkcmxdgazzq53jbk
                     total_tax_amount: 0
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2022-01-01T10:15:30+0000
                     voided_at: 2022-12-05T10:15:30+0000
           description: OK
@@ -8620,6 +8709,8 @@ paths:
                       - amount: 10
                         applied_discount_id: disc_hkpdkcmxdgazzq53jbk
                     total_tax_amount: 0
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2022-01-01T10:15:30+0000
                     voided_at: 2022-12-05T10:15:30+0000
           description: OK
@@ -8745,6 +8836,11 @@ paths:
                   minLength: 0
                   type: string
                   description: Meter description. Used for internal classification and identification.
+                dimension_keys:
+                  type: array
+                  description: Append-only list of event property keys. New keys can be appended; existing keys cannot be modified, removed, or renamed. Used for event grouping and filtering. A usage event may include any subset of these (or none).
+                  items:
+                    type: string
                 event_name:
                   maxLength: 200
                   minLength: 0
@@ -8975,6 +9071,24 @@ paths:
           required: false
           schema:
             type: string
+        - description: The event property keys to break the usage summary down by. Each key must be one of the Meter's `dimension_keys`. If not specified, usage is not broken down by event property keys. Can be combined with `grouped_by` to break down each time window further — the response then contains one summary per (time window × dimension key combination).
+          in: query
+          name: grouped_by_dimensions
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - description: Filters the usage events included in the summary calculation by event property keys. Each key must be one of the Meter's `dimension_keys`.
+          in: query
+          name: dimension_filters
+          required: false
+          style: deepObject
+          explode: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
         - description: A bookmark for use in pagination to retrieve either the next page or the previous page of results. You can fetch the value for this identifier from the response of the previous API call. To retrieve the next page of results, pass the value of `page_after` (if not `null`) from the response to a subsequent call. To retrieve the previous page of results, pass the value of `page_before` (if not `null`) from the response to a subsequent call.
           in: query
           name: page
@@ -9021,7 +9135,7 @@ paths:
           description: "Not Found. Possible error codes: `resource_not_found`"
         "500":
           description: "Server Error. Possible error codes: `internal_error`"
-      summary: 7|Retrieve a Summaries of a Meter
+      summary: 7|Retrieve Summaries of a Meter
       tags:
         - Billing > Meters
       x-examples:
@@ -9178,6 +9292,11 @@ paths:
                 description:
                   type: string
                   description: Meter description. Used for internal classification and identification.
+                dimension_keys:
+                  type: array
+                  description: Complete list of dimension keys. Existing keys must remain unchanged and in the same order. New keys may only be appended.
+                  items:
+                    type: string
                 metadata:
                   type: object
                   additionalProperties:
@@ -10710,6 +10829,13 @@ paths:
                         type: integer
                         description: The quantity of the product. Defaults to `1`.
                         format: int32
+                      rate_card_id:
+                        type: string
+                        description: ID of a [Rate Card](/docs/api/billing/rate_cards) object. Exactly one of `price_id`, `price`, or `rate_card_id` is required.
+                      rate_card_version:
+                        type: integer
+                        description: Pinned Rate Card version number. Required when `rate_card_id` is set.
+                        format: int32
                       tax_percent:
                         maximum: 100
                         minimum: 0
@@ -11634,6 +11760,13 @@ paths:
                         minimum: 1
                         type: integer
                         description: The quantity of the product.
+                        format: int32
+                      rate_card_id:
+                        type: string
+                        description: ID of the [Rate Card](/docs/api/billing/rate_cards) object. Required when adding a new item. You can't update the `rate_card_id` of the existing item.
+                      rate_card_version:
+                        type: integer
+                        description: Pinned Rate Card version number. Required when adding a new item with `rate_card_id`.
                         format: int32
                       tax_percent:
                         maximum: 100
@@ -22268,6 +22401,7 @@ paths:
             ,"invalid_argument"
             ,"invalid_bin_format"
             ,"ineligible_bin"
+            ,"invalid_card_profile"
             ]
           content:
             application/json:
@@ -37068,6 +37202,8 @@ paths:
                       - EUR
                       - AUD
                     title: "Order #1529"
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2021-08-17T11:05:00+00:00
                     url: https://pay.airwallex.com/hkdab0d955b5
         "201":
@@ -37172,6 +37308,13 @@ paths:
                   description: List of supported currencies the shopper may choose from. For Flexible pricing only.
                   items:
                     type: string
+                ui_options:
+                  type: object
+                  description: UI configuration for the payment checkout page.
+                  properties:
+                    theme_id:
+                      type: string
+                      description: ID of the theme to apply to this payment link, overriding the theme configured for its account. You can find the theme ID in the Airwallex web app under Settings > Themes.
                 title:
                   type: string
                   description: The title of the payment link that is displayed in the payment checkout page.
@@ -37200,6 +37343,8 @@ paths:
                   supported_currencies:
                     - EUR
                     - AUD
+                  ui_options:
+                    theme_id: tm_sgpdvff8whip0bfgzzt
                   title: "Order #1529"
         description: Request to create a new payment link.
         required: true
@@ -37238,6 +37383,8 @@ paths:
                     supported_currencies:
                       - EUR
                       - AUD
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     title: "Order #1529"
                     updated_at: 2021-08-17T11:05:00+00:00
                     url: https://pay.airwallex.com/hkdab0d955b5
@@ -37322,6 +37469,8 @@ paths:
                       - EUR
                       - AUD
                     title: "Order #1529"
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     updated_at: 2021-08-17T11:05:00+00:00
                     url: https://pay.airwallex.com/hkdab0d955b5
         "201":
@@ -37457,6 +37606,8 @@ paths:
                           - EUR
                           - AUD
                         title: "Order #1529"
+                        ui_options:
+                          theme_id: tm_sgpdvff8whip0bfgzzt
                         updated_at: 2021-08-17T11:05:00+00:00
                         url: https://pay.airwallex.com/hkdab0d955b5
         "400":
@@ -37610,6 +37761,8 @@ paths:
                     supported_currencies:
                       - EUR
                       - AUD
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     title: "Order #1529"
                     updated_at: 2021-08-17T11:05:00+00:00
                     url: https://pay.airwallex.com/hkdab0d955b5
@@ -37709,6 +37862,13 @@ paths:
                   description: List of supported currencies the shopper may choose from. For Flexible pricing only.
                   items:
                     type: string
+                ui_options:
+                  type: object
+                  description: UI configuration for the payment checkout page.
+                  properties:
+                    theme_id:
+                      type: string
+                      description: ID of the theme to apply to this payment link, overriding the theme configured for its account. You can find the theme ID in the Airwallex web app under Settings > Themes.
                 title:
                   type: string
                   description: The title of the payment link that is displayed in the payment checkout page.
@@ -37733,6 +37893,8 @@ paths:
                   supported_currencies:
                     - EUR
                     - AUD
+                  ui_options:
+                    theme_id: tm_sgpdvff8whip0bfgzzt
                   title: "Order #1529"
         description: Request to update the payment link.
         required: true
@@ -37771,6 +37933,8 @@ paths:
                     supported_currencies:
                       - EUR
                       - AUD
+                    ui_options:
+                      theme_id: tm_sgpdvff8whip0bfgzzt
                     title: "Order #1529"
                     updated_at: 2021-08-17T11:05:00+00:00
                     url: https://pay.airwallex.com/hkdab0d955b5
@@ -76800,54 +76964,6 @@ components:
           type: string
           description: Payer's street address.
       description: Payer's address details.
-    PrefilledCustomerData:
-      type: object
-      properties:
-        email:
-          maxLength: 200
-          minLength: 0
-          type: string
-          description: |-
-            The prefilled email of the customer.
-            If this field or a `billing_customer_id` with an email on file is provided, the email will be prefilled and will not be editable during checkout.
-            If neither is provided, Billing Checkout will prompt the customer to enter their email during the checkout process.
-        name:
-          maxLength: 200
-          minLength: 0
-          type: string
-          description: |-
-            The prefilled name of the customer.
-            If this field or a `billing_customer_id` with a name on file is provided, the name will be prefilled and will not be editable during checkout.
-            If neither is provided, Billing Checkout will prompt the customer to enter their name during checkout.
-        type:
-          type: string
-          description: |-
-            Type of the billing customer, one of `BUSINESS` or `INDIVIDUAL`.
-            If not provided, an "I am purchasing as a business" checkbox will be displayed during checkout for the customer to self-select.
-      description: |-
-        The prefilled information of the customer. Only applicable when `billing_customer_id` is not provided.  
-        Not applicable in `SETUP` mode.
-    CustomerDataCollection:
-      type: object
-      properties:
-        billing_address:
-          pattern: ^(AUTO|REQUIRED)$
-          type: string
-          description: |-
-            Controls whether the billing address will be collected during checkout.
-            - `AUTO`: Billing address will only be collected when necessary. Specifically, when automatic tax is enabled, or tax_id is collected.
-            - `REQUIRED`: Billing address will always be collected.
-            Defaults to `AUTO`.
-        tax_id:
-          pattern: ^(DISABLED|OPTIONAL_IF_SUPPORTED|REQUIRED_IF_SUPPORTED)$
-          type: string
-          description: |-
-            Controls whether the tax ID will be collected for business customer during checkout. One of `OPTIONAL_IF_SUPPORTED`, `DISABLED`, `REQUIRED_IF_SUPPORTED`.
-            - `DISABLED`: Tax id will not be collected.
-            - `OPTIONAL_IF_SUPPORTED`: Tax id will be optionally collected in the supported countries, by displaying a checkbox "I am purchasing as business".
-            - `REQUIRED_IF_SUPPORTED`: Tax id will always be collected if the country is in the supported list.
-            Defaults to `OPTIONAL_IF_SUPPORTED`.
-      description: Provides configuration for the Billing Checkout to collect information from customers.
     CouponDiscountDataRequest:
       required:
         - id
@@ -76867,42 +76983,6 @@ components:
         type:
           type: string
           description: "Specifies how to obtain the discount. One of: `COUPON`."
-    HostedCompletionPage:
-      required:
-        - display
-      type: object
-      properties:
-        display:
-          type: boolean
-          description: Whether to display the Airwallex-hosted completion page after checkout is completed and before the customer is redirected to `success_url`.
-      description: Configuration for the Airwallex-hosted completion page. Only applicable when `ui_mode` is `HOSTED`.
-    InvoiceDataResponse:
-      type: object
-      properties:
-        days_until_due:
-          type: integer
-          description: Number of days from invoice finalization until payment is due.
-          format: int32
-        default_tax_percent:
-          type: number
-          description: The tax rate between 0 and 100(%) to be applied to invoices to be generated. The tax will be exclusive. Defaults to 0.
-          maximum: 100
-          minimum: 0
-        due_at:
-          type: string
-          description: Due date set by the merchant for this invoice, if any.
-        memo:
-          type: string
-          description: String used for merchants to share a custom message to their customers. Referenced as memo or invoice note in Webapp.
-          maxLength: 200
-          minLength: 0
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-            description: A set of key-value pairs that you can attach to this object for storing additional information.
-          description: A set of key-value pairs that you can attach to this object for storing additional information.
-      description: The settings of invoice to be passed to the invoice creation upon completion of the Billing Checkout in `PAYMENT` mode.
     CheckoutLineItem:
       required:
         - discounts
@@ -76923,6 +77003,13 @@ components:
           description: The quantity of the line item being purchased.
           format: int32
           minimum: 1
+        rate_card_id:
+          type: string
+          description: ID of the [Rate Card](/docs/api/billing/rate_cards) object. Mutually exclusive with `price_id`.
+        rate_card_version:
+          type: integer
+          description: Pinned Rate Card version number. Present when `rate_card_id` is set.
+          format: int32
         tax_percent:
           type: number
           description: The effective tax percent of this line item.
@@ -77094,12 +77181,12 @@ components:
           type: string
           description: The checkout currency in 3-letter ISO-4217 format.
         customer_data:
-          $ref: "#/components/schemas/PrefilledCustomerData"
+          $ref: "#/components/schemas/Billing_PrefilledCustomerData"
           description: |-
             The prefilled information of the customer. Only applicable when `billing_customer_id` is not provided.  
             Not applicable in `SETUP` mode.
         customer_data_collection:
-          $ref: "#/components/schemas/CustomerDataCollection"
+          $ref: "#/components/schemas/Billing_CustomerDataCollection"
           description: Provides configuration for the Billing Checkout to collect information from customers.
         discounts:
           type: array
@@ -77113,13 +77200,13 @@ components:
           type: string
           description: Time when the Billing Checkout expires.
         hosted_completion_page:
-          $ref: "#/components/schemas/HostedCompletionPage"
+          $ref: "#/components/schemas/Billing_HostedCompletionPage"
           description: Configuration for the Airwallex-hosted completion page. Only applicable when `ui_mode` is `HOSTED`.
         id:
           type: string
           description: ID of the Billing Checkout object.
         invoice_data:
-          $ref: "#/components/schemas/InvoiceDataResponse"
+          $ref: "#/components/schemas/Billing_InvoiceDataResponse"
           description: The settings of invoice to be passed to the invoice creation upon completion of the Billing Checkout in `PAYMENT` mode.
         invoice_id:
           type: string
@@ -77179,6 +77266,13 @@ components:
         success_url:
           type: string
           description: The URL the customer will be directed to after the checkout completion.
+        ui_options:
+          type: object
+          description: UI configuration for the hosted checkout page.
+          properties:
+            theme_id:
+              type: string
+              description: ID of the theme to apply to this billing checkout, overriding the theme configured for its legal entity.
         ui_mode:
           type: string
           description: |-
@@ -78221,6 +78315,13 @@ components:
         subscription_id:
           type: string
           description: ID of the [Subscription](/docs/api/billing/subscriptions) that generated this invoice, if any.
+        ui_options:
+          type: object
+          description: UI configuration for the digital invoice page.
+          properties:
+            theme_id:
+              type: string
+              description: ID of the theme to apply to this invoice, overriding the theme configured for its legal entity.
         total_amount:
           type: number
           description: The total amount of the invoice, including tax and discount if applicable.
@@ -78510,6 +78611,96 @@ components:
           type: string
           description: Time when the price was last updated.
       description: Price subscribed by the customer.
+    RateCardItemLot:
+      required:
+        - rounding_mode
+        - size
+      type: object
+      properties:
+        rounding_mode:
+          pattern: ^UP$
+          type: string
+          description: Specifies how to round the calculated lots when the total quantity is not an exact multiple of the size. One of `UP`.
+        size:
+          minimum: 2
+          type: integer
+          description: The amount of quantity that constitutes a single billable lot.
+          format: int32
+      description: Defines how quantity is grouped into billable lots. The `unit_amount` is then applied per lot. If not set, quantity is treated as the number of billable lots. Only applicable for `PER_UNIT`.
+    RateCardItemTier:
+      required:
+        - level
+      type: object
+      properties:
+        flat_amount:
+          type: number
+          description: The flat amount to be charged for this tier when pricing model is `GRADUATED`, or the overall flat amount to be charged when pricing model is `VOLUME`.
+          minimum: 0
+        level:
+          type: integer
+          description: The sequential position of the tier within the item definition. Starts from 1.
+          format: int32
+        lot:
+          $ref: "#/components/schemas/RateCardItemLot"
+          description: Defines how quantity is grouped into billable lots. The `unit_amount` is then applied per lot. Only applicable for `VOLUME` and `GRADUATED`.
+        unit_amount:
+          type: number
+          description: The per-unit amount to be charged for this tier when pricing model is `GRADUATED`, or the overall per-unit amount to be charged when pricing model is `VOLUME`.
+          minimum: 0
+        unit_description:
+          type: string
+          description: Description of the billable unit for the tier.
+        upper_bound:
+          type: number
+          description: The upper quantity limit of this tier. For the last tier, the upper bound must be left empty.
+          minimum: 0
+      description: A quantity-based pricing tier for a Rate Card Item.
+    RateCardItem:
+      required:
+        - created_at
+        - dimension_values
+        - id
+        - pricing_model
+        - rate_card_id
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Time when this rate card item was created.
+        dimension_values:
+          type: object
+          additionalProperties:
+            type: string
+            description: A dimension value that this item applies to.
+          description: The dimension values this item applies to. Each key must be one of the Rate Card Version's `dimension_keys` (a subset is allowed). Any key omitted here acts as a wildcard, matching any value for that dimension; an empty object matches all usage (a catch-all).
+        id:
+          type: string
+          description: ID of the Rate Card Item object.
+        lot:
+          $ref: "#/components/schemas/RateCardItemLot"
+          description: Defines how quantity is grouped into billable lots. The `unit_amount` is then applied per lot. If not set, quantity is treated as the number of billable lots. Only applicable for `PER_UNIT`.
+        pricing_model:
+          type: string
+          description: |-
+            Specify how to calculate the total billing amount when a quantity is provided. One of
+            - `PER_UNIT`: a fixed price per unit quantity.
+            - `VOLUME`: the unit price is based on which tier the total quantity falls in.
+            - `GRADUATED`: the unit price changes as the quantity increases.
+        rate_card_id:
+          type: string
+          description: ID of the Rate Card this item belongs to.
+        tiers:
+          type: array
+          description: List of quantity-based pricing tiers for this item. Only present when the pricing model is `VOLUME` or `GRADUATED`.
+          items:
+            $ref: "#/components/schemas/RateCardItemTier"
+        unit_amount:
+          type: number
+          description: The amount to be charged per product unit. Only present when the pricing model is `PER_UNIT`.
+        unit_description:
+          type: string
+          description: Description of the billable unit for this item.
+      description: A Rate Card Item represents the price for one dimension combination within a Rate Card version.
     InvoiceItem:
       required:
         - amount
@@ -78578,6 +78769,12 @@ components:
         price_tier:
           $ref: "#/components/schemas/InvoiceItemPriceTier"
           description: The price tier this line item belongs to. Only present for graduated or volume pricing. Mutually exclusive with `rate_card_item_tier`.
+        rate_card_item:
+          $ref: "#/components/schemas/RateCardItem"
+          description: Rate Card Item billed to the customer. Mutually exclusive with `price`.
+        rate_card_item_tier:
+          $ref: "#/components/schemas/InvoiceItemPriceTier"
+          description: The Rate Card Item tier this line item belongs to. Only present for graduated or volume pricing. Mutually exclusive with `price_tier`.
         remaining_creditable_amount:
           type: number
           description: The total amount currently available to be credited for this invoice line item, excluding tax and discount.
@@ -78856,6 +79053,11 @@ components:
         description:
           type: string
           description: Meter description. Used for internal classification and identification.
+        dimension_keys:
+          type: array
+          description: Append-only list of event property keys. New keys can be appended; existing keys cannot be modified, removed, or renamed. Used for event grouping and filtering. A usage event may include any subset of these (or none).
+          items:
+            type: string
         event_name:
           type: string
           description: The name of the Usage Event to record for. Corresponds with the `event_name` field on [Usage Events](/docs/api/billing/usage_events).
@@ -78903,6 +79105,12 @@ components:
         billing_customer_id:
           type: string
           description: ID of the Billing Customer object.
+        dimension_values:
+          type: object
+          additionalProperties:
+            type: string
+            description: A dimension value that this summary is broken down by.
+          description: The event property keys and values this summary is broken down by. Only present when `grouped_by_dimensions` is specified in the request.
         event_count:
           type: integer
           description: The number of usage events that contributed to the value.
@@ -78983,6 +79191,60 @@ components:
         page_before:
           type: string
           description: The page cursor used for search before page.
+    RateCard:
+      required:
+        - active
+        - created_at
+        - currency
+        - id
+        - meter_id
+        - name
+        - product_id
+        - recurring
+        - tax_included
+        - updated_at
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: "`true` if the rate card is available for new purchases, `false` otherwise."
+        created_at:
+          type: string
+          description: Time when this rate card was created.
+        currency:
+          type: string
+          description: Currency of the items of this rate card (in 3-letter ISO-4217 format).
+        description:
+          type: string
+          description: Rate card description. Used for internal classification and identification.
+        id:
+          type: string
+          description: ID of the Rate Card object.
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+            description: A set of string key-value pairs that you can attach to this object for storing additional information.
+          description: A set of string key-value pairs that you can attach to this object for storing additional information.
+        meter_id:
+          type: string
+          description: ID of the [Meter](/docs/api/billing/meters) object specifying how to calculate the usage for the items of this rate card.
+        name:
+          type: string
+          description: Rate card name.
+        product_id:
+          type: string
+          description: ID of the [Product](/docs/api/billing/products) object this rate card is associated with.
+        recurring:
+          $ref: "#/components/schemas/SubscriptionRecurring"
+          description: The frequency at which the items of this rate card are charged.
+        tax_included:
+          type: boolean
+          description: Whether the item prices include tax.
+        updated_at:
+          type: string
+          description: Time when this rate card was last updated.
+      description: Represents a versioned container for multi-dimensional pricing that groups multiple Rate Card Items by dimension combinations under a shared set of billing fields.
     SubscriptionPaymentMethodSave:
       type: object
       properties:
@@ -79169,6 +79431,34 @@ components:
         page_before:
           type: string
           description: The page cursor used for search before page.
+    RateCardVersionWithRateCard:
+      required:
+        - created_at
+        - dimension_keys
+        - rate_card
+        - rate_card_id
+        - version
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Time when this rate card version was created.
+        dimension_keys:
+          type: array
+          description: Subset of or equal to the Meter's `dimension_keys`. Defines which dimension keys are used in each item's `dimension_values`. Append-only across versions — a new version's set must contain all keys from the previous version.
+          items:
+            type: string
+        rate_card:
+          $ref: "#/components/schemas/RateCard"
+          description: The Rate Card this version belongs to.
+        rate_card_id:
+          type: string
+          description: ID of the Rate Card this version belongs to.
+        version:
+          type: integer
+          description: The version number within the Rate Card, starting from `1`.
+          format: int32
+      description: The pinned Rate Card Version on a Subscription Item, including the associated Rate Card.
     SubscriptionItem:
       required:
         - applied_discounts
@@ -79208,6 +79498,9 @@ components:
           type: number
           description: The quantity of the product.
           minimum: 1
+        rate_card_version:
+          $ref: "#/components/schemas/RateCardVersionWithRateCard"
+          description: The pinned Rate Card Version on a Subscription Item. Mutually exclusive with `price`.
         subscription_id:
           type: string
           description: ID of the Subscription object that this Subscription Item belongs to.
@@ -79353,6 +79646,90 @@ components:
         voided_at:
           type: string
           description: Time when this usage event was voided.
+    Billing_PrefilledCustomerData:
+      type: object
+      properties:
+        email:
+          maxLength: 200
+          minLength: 0
+          type: string
+          description: |-
+            The prefilled email of the customer.
+            If this field or a `billing_customer_id` with an email on file is provided, the email will be prefilled and will not be editable during checkout.
+            If neither is provided, Billing Checkout will prompt the customer to enter their email during the checkout process.
+        name:
+          maxLength: 200
+          minLength: 0
+          type: string
+          description: |-
+            The prefilled name of the customer.
+            If this field or a `billing_customer_id` with a name on file is provided, the name will be prefilled and will not be editable during checkout.
+            If neither is provided, Billing Checkout will prompt the customer to enter their name during checkout.
+        type:
+          type: string
+          description: |-
+            Type of the billing customer, one of `BUSINESS` or `INDIVIDUAL`.
+            If not provided, an "I am purchasing as a business" checkbox will be displayed during checkout for the customer to self-select.
+      description: |-
+        The prefilled information of the customer. Only applicable when `billing_customer_id` is not provided.  
+        Not applicable in `SETUP` mode.
+    Billing_CustomerDataCollection:
+      type: object
+      properties:
+        billing_address:
+          pattern: ^(AUTO|REQUIRED)$
+          type: string
+          description: |-
+            Controls whether the billing address will be collected during checkout.
+            - `AUTO`: Billing address will only be collected when necessary. Specifically, when automatic tax is enabled, or tax_id is collected.
+            - `REQUIRED`: Billing address will always be collected.
+            Defaults to `AUTO`.
+        tax_id:
+          pattern: ^(DISABLED|OPTIONAL_IF_SUPPORTED|REQUIRED_IF_SUPPORTED)$
+          type: string
+          description: |-
+            Controls whether the tax ID will be collected for business customer during checkout. One of `OPTIONAL_IF_SUPPORTED`, `DISABLED`, `REQUIRED_IF_SUPPORTED`.
+            - `DISABLED`: Tax id will not be collected.
+            - `OPTIONAL_IF_SUPPORTED`: Tax id will be optionally collected in the supported countries, by displaying a checkbox "I am purchasing as business".
+            - `REQUIRED_IF_SUPPORTED`: Tax id will always be collected if the country is in the supported list.
+            Defaults to `OPTIONAL_IF_SUPPORTED`.
+      description: Provides configuration for the Billing Checkout to collect information from customers.
+    Billing_HostedCompletionPage:
+      required:
+        - display
+      type: object
+      properties:
+        display:
+          type: boolean
+          description: Whether to display the Airwallex-hosted completion page after checkout is completed and before the customer is redirected to `success_url`.
+      description: Configuration for the Airwallex-hosted completion page. Only applicable when `ui_mode` is `HOSTED`.
+    Billing_InvoiceDataResponse:
+      type: object
+      properties:
+        days_until_due:
+          type: integer
+          description: Number of days from invoice finalization until payment is due.
+          format: int32
+        default_tax_percent:
+          type: number
+          description: The tax rate between 0 and 100(%) to be applied to invoices to be generated. The tax will be exclusive. Defaults to 0.
+          maximum: 100
+          minimum: 0
+        due_at:
+          type: string
+          description: Due date set by the merchant for this invoice, if any.
+        memo:
+          type: string
+          description: String used for merchants to share a custom message to their customers. Referenced as memo or invoice note in Webapp.
+          maxLength: 200
+          minLength: 0
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+            description: A set of key-value pairs that you can attach to this object for storing additional information.
+          description: A set of key-value pairs that you can attach to this object for storing additional information.
+      description: The settings of invoice to be passed to the invoice creation upon completion of the Billing Checkout in `PAYMENT` mode.
     Billing_PaymentSource:
       required:
         - billing_customer_id
@@ -83577,6 +83954,28 @@ components:
           $ref: "#/components/schemas/MandateSchedule"
           description: The schedule for recurring transaction cycles. If no schedule is provided, the number of transactions allowed will be unlimited.
       description: Set of characteristics defining the mandate. Controls how Direct Debit can be initiated. Only applicable if mandate type is AU_PAYTO_DEBIT.
+    Core_Resources_Address:
+      type: object
+      properties:
+        address_line1:
+          type: string
+          description: The first line of a physical address, typically including the street number and name of the building or residence. A P.O. box is not acceptable.
+        address_line2:
+          type: string
+          description: An optional field that can be used to capture additional information about the address, such as the apartment/ suite number, or floor number.
+        country_code:
+          type: string
+          description: Country code. (2-letter ISO 3166-2 country code).
+        postcode:
+          type: string
+          description: Postcode or zip code. Only applicable if relevant to selected country.
+        state:
+          type: string
+          description: Name of state. Only applicable if relevant to selected country.
+        suburb:
+          type: string
+          description: Name of city/suburb.
+      description: Address where the business operates and conducts its activities.
     Core_Resources_FailureDetails:
       type: object
       properties:
@@ -83629,28 +84028,6 @@ components:
             - EGIRO
             - BASIQ
       description: Details of the next action to be taken to activate the Linked Account. For all statuses other than REQUIRES_ACTION, will return as null.
-    Core_Resources_Address:
-      type: object
-      properties:
-        address_line1:
-          type: string
-          description: The first line of a physical address, typically including the street number and name of the building or residence. A P.O. box is not acceptable.
-        address_line2:
-          type: string
-          description: An optional field that can be used to capture additional information about the address, such as the apartment/ suite number, or floor number.
-        country_code:
-          type: string
-          description: Country code. (2-letter ISO 3166-2 country code).
-        postcode:
-          type: string
-          description: Postcode or zip code. Only applicable if relevant to selected country.
-        state:
-          type: string
-          description: Name of state. Only applicable if relevant to selected country.
-        suburb:
-          type: string
-          description: Name of city/suburb.
-      description: Address where the business operates and conducts its activities.
     Core_Resources_Mandate:
       type: object
       required:
@@ -89627,40 +90004,6 @@ components:
         name:
           type: string
           description: The name of the seller in the merchant's system. Maximum length is 100.
-    Shipping:
-      type: object
-      properties:
-        address:
-          $ref: "#/components/schemas/Payment_Acceptance_Address"
-          description: Shipping address.
-        fee_amount:
-          type: number
-          description: Shipping fee amount.
-        first_name:
-          type: string
-          description: First name of the recipient. Maximum of 128 characters.
-        last_name:
-          type: string
-          description: Last name of the recipient. Maximum of 128 characters.
-        phone_number:
-          type: string
-          description: Phone number of the recipient. Maximum of 50 characters.
-        shipping_company:
-          type: string
-          description: Name of the shipping company. Maximum of 100 characters.
-        shipping_delayed_at:
-          type: string
-          description: Use if customer chose to deliver the item at a later time. The timestamp must include an explicit timezone (e.g. `Z` or `-04:00`).
-        shipping_method:
-          type: string
-          description: Shipping method for the product. Maximum of 128 characters.
-        tracking_number:
-          type: string
-          description: Tracking number of the shipment. Maximum of 100 characters.
-        tracking_url:
-          type: string
-          description: URL where the customer can track the shipment. Maximum of 1024 characters.
-      description: Shipping information.
     SurchargeRes:
       type: object
       required:
@@ -90090,6 +90433,13 @@ components:
           description: The supported currencies for Flexible pricing.
           items:
             type: string
+        ui_options:
+          type: object
+          description: UI configuration for the payment checkout page.
+          properties:
+            theme_id:
+              type: string
+              description: ID of the theme to apply to this payment link, overriding the theme configured for its account.
         title:
           type: string
           description: The title of the payment link that is displayed in the payment checkout page.
@@ -90556,6 +90906,61 @@ components:
           type: string
           description: Type of the number. One of `PAN`, `EXTERNAL_NETWORK_TOKEN`, `AIRWALLEX_NETWORK_TOKEN`.
       description: Card information. Only provided when `type` is `card`.
+    Payment_Acceptance_Address:
+      type: object
+      required:
+        - country_code
+      properties:
+        city:
+          type: string
+          description: City of the address. Maximum of 100 characters.
+        country_code:
+          type: string
+          description: The two-letter country code in ISO 3166-1 alpha-2 format.
+        postcode:
+          type: string
+          description: Postcode of the address. Maximum of 10 characters.
+        state:
+          type: string
+          description: State or province of the address. Maximum of 100 characters.
+        street:
+          type: string
+          description: Street of the address. Maximum of 1000 characters.
+      description: The billing address as it appears on the credit card issuer’s records.
+    Payment_Acceptance_Shipping:
+      type: object
+      properties:
+        address:
+          $ref: "#/components/schemas/Payment_Acceptance_Address"
+          description: Shipping address.
+        fee_amount:
+          type: number
+          description: Shipping fee amount.
+        first_name:
+          type: string
+          description: First name of the recipient. Maximum of 128 characters.
+        last_name:
+          type: string
+          description: Last name of the recipient. Maximum of 128 characters.
+        phone_number:
+          type: string
+          description: Phone number of the recipient. Maximum of 50 characters.
+        shipping_company:
+          type: string
+          description: Name of the shipping company. Maximum of 100 characters.
+        shipping_delayed_at:
+          type: string
+          description: Use if customer chose to deliver the item at a later time. The timestamp must include an explicit timezone (e.g. `Z` or `-04:00`).
+        shipping_method:
+          type: string
+          description: Shipping method for the product. Maximum of 128 characters.
+        tracking_number:
+          type: string
+          description: Tracking number of the shipment. Maximum of 100 characters.
+        tracking_url:
+          type: string
+          description: URL where the customer can track the shipment. Maximum of 1024 characters.
+      description: Shipping information.
     Payment_Acceptance_FailureDetails:
       type: object
       properties:
@@ -90603,27 +91008,6 @@ components:
           type: string
           description: The redirect url.
       description: Next action for merchant.
-    Payment_Acceptance_Address:
-      type: object
-      required:
-        - country_code
-      properties:
-        city:
-          type: string
-          description: City of the address. Maximum of 100 characters.
-        country_code:
-          type: string
-          description: The two-letter country code in ISO 3166-1 alpha-2 format.
-        postcode:
-          type: string
-          description: Postcode of the address. Maximum of 10 characters.
-        state:
-          type: string
-          description: State or province of the address. Maximum of 100 characters.
-        street:
-          type: string
-          description: Street of the address. Maximum of 1000 characters.
-      description: The billing address as it appears on the credit card issuer’s records.
     Payment_Acceptance_Mandate:
       type: object
       properties:
@@ -90683,7 +91067,7 @@ components:
           items:
             $ref: "#/components/schemas/Seller"
         shipping:
-          $ref: "#/components/schemas/Shipping"
+          $ref: "#/components/schemas/Payment_Acceptance_Shipping"
           description: Shipping information.
         surcharge:
           $ref: "#/components/schemas/SurchargeRes"
@@ -94825,14 +95209,6 @@ components:
           type: string
           description: The name of the payer.
       description: The Payer provided along with the deposit.
-    Embedded_Finance_NextAction:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Code that describes what to do next when status is ACTION_REQUIRED.
-          readOnly: true
-      description: Further information required in order to proceed with this account.
     Embedded_Finance_Address:
       type: object
       properties:
@@ -94855,6 +95231,14 @@ components:
           type: string
           description: Name of city/suburb.
       description: Address where the business operates and conducts its activities.
+    Embedded_Finance_NextAction:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Code that describes what to do next when status is ACTION_REQUIRED.
+          readOnly: true
+      description: Further information required in order to proceed with this account.
     Embedded_Finance_AdditionalInfo:
       type: object
       properties:
@@ -102004,8 +102388,12 @@ x-tagGroups:
       - Billing > Payment Sources
       - Billing > Prices
       - Billing > Products
+      - Billing > Rate Cards
       - Billing > Subscriptions
       - Billing > Usage Events
+  - name: Checkout
+    tags:
+      - Checkout > Checkout Sessions
   - name: Confirmation Letter
     tags:
       - Confirmation Letter > Confirmation Letter
