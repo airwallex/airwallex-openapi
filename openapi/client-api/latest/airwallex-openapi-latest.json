@@ -770,13 +770,11 @@
                     "value": {
                       "comment": "string",
                       "details": {
-                        "reason_codes": [
-                          "string"
-                        ]
+                        "reason_codes": []
                       },
-                      "entity_type": "INDIVIDUAL",
+                      "entity_type": "BUSINESS",
                       "id": "payments_mastercard",
-                      "status": "ENABLED",
+                      "status": "PENDING",
                       "updated_at": "2023-04-01T11:25:39+0000"
                     }
                   },
@@ -838,13 +836,11 @@
             "response_body": {
               "comment": "string",
               "details": {
-                "reason_codes": [
-                  "string"
-                ]
+                "reason_codes": []
               },
-              "entity_type": "INDIVIDUAL",
+              "entity_type": "BUSINESS",
               "id": "payments_mastercard",
-              "status": "ENABLED",
+              "status": "PENDING",
               "updated_at": "2023-04-01T11:25:39+0000"
             }
           },
@@ -1080,7 +1076,10 @@
             },
             "examples": {
               "default": {
-                "value": "account_capability_id"
+                "value": "payments_visa"
+              },
+              "transfer_cny_local": {
+                "value": "transfer_cny_local"
               }
             }
           }
@@ -1095,6 +1094,23 @@
                 },
                 "examples": {
                   "default": {
+                    "value": {
+                      "comment": "<string>",
+                      "details": {
+                        "reason_codes": [],
+                        "mcc": "5812",
+                        "mcc_candidates": [
+                          "5812",
+                          "5814"
+                        ]
+                      },
+                      "entity_type": "BUSINESS",
+                      "id": "payments_visa",
+                      "status": "ENABLED",
+                      "updated_at": "2023-04-01T11:25:39+0000"
+                    }
+                  },
+                  "transfer_cny_local": {
                     "value": {
                       "comment": "<string>",
                       "details": {
@@ -1134,9 +1150,36 @@
         "x-examples": [
           {
             "key": "default",
-            "name": "",
+            "name": "Payment Method",
             "method": "GET",
-            "uri": "/api/v1/account_capabilities/account_capability_id",
+            "uri": "/api/v1/account_capabilities/payments_visa",
+            "request_headers": {
+              "Authorization": "Bearer {{ACCESS_TOKEN}}",
+              "Content-Type": "application/json"
+            },
+            "status_code": 200,
+            "reason_phrase": "OK",
+            "response_body": {
+              "comment": "<string>",
+              "details": {
+                "reason_codes": [],
+                "mcc": "5812",
+                "mcc_candidates": [
+                  "5812",
+                  "5814"
+                ]
+              },
+              "entity_type": "BUSINESS",
+              "id": "payments_visa",
+              "status": "ENABLED",
+              "updated_at": "2023-04-01T11:25:39+0000"
+            }
+          },
+          {
+            "key": "transfer_cny_local",
+            "name": "Transfer CNY Local",
+            "method": "GET",
+            "uri": "/api/v1/account_capabilities/transfer_cny_local",
             "request_headers": {
               "Authorization": "Bearer {{ACCESS_TOKEN}}",
               "Content-Type": "application/json"
@@ -47525,7 +47568,15 @@
                         "properties": {
                           "channel": {
                             "type": "string",
-                            "description": "Payment channel. Use `pos` for POS transactions."
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           },
                           "flow": {
                             "type": "string",
@@ -51043,6 +51094,18 @@
                           "os_type": {
                             "type": "string",
                             "description": "Required when `flow` is `mobile_web`, `mobile_app` or `mini_program`. One of `ios`, `android`."
+                          },
+                          "channel": {
+                            "type": "string",
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           }
                         }
                       },
@@ -51060,6 +51123,18 @@
                           "os_type": {
                             "type": "string",
                             "description": "Required when `flow` is `mobile_web` or `mobile_app`. One of `ios`, `android`."
+                          },
+                          "channel": {
+                            "type": "string",
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           }
                         }
                       },
@@ -52341,7 +52416,15 @@
                         "properties": {
                           "channel": {
                             "type": "string",
-                            "description": "Payment channel. Use `pos` for POS transactions."
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           },
                           "flow": {
                             "type": "string",
@@ -52420,7 +52503,15 @@
                         "properties": {
                           "channel": {
                             "type": "string",
-                            "description": "Payment channel. Use `pos` for POS transactions."
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           },
                           "shopper_name": {
                             "type": "string",
@@ -52921,7 +53012,15 @@
                         "properties": {
                           "channel": {
                             "type": "string",
-                            "description": "Payment channel. Use `pos` for POS transactions."
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           },
                           "flow": {
                             "type": "string",
@@ -56422,7 +56521,15 @@
                         "properties": {
                           "channel": {
                             "type": "string",
-                            "description": "Payment channel. Use `pos` for POS transactions."
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           },
                           "shopper_name": {
                             "type": "string",
@@ -56443,7 +56550,15 @@
                         "properties": {
                           "channel": {
                             "type": "string",
-                            "description": "Payment channel. Use `pos` for POS transactions."
+                            "description": "Payment channel. Default: `ecom`.",
+                            "enum": [
+                              "pos",
+                              "ecom"
+                            ],
+                            "x-enumDescriptions": {
+                              "pos": "A point-of-sale (POS) transaction.",
+                              "ecom": "A online e-commerce transaction."
+                            }
                           },
                           "flow": {
                             "type": "string",
@@ -112647,7 +112762,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -112812,7 +112927,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -112921,7 +113036,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -114514,19 +114629,19 @@
                   },
                   "from_created_at": {
                     "type": "string",
-                    "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
+                    "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n* `created_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n* `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
                   },
                   "from_updated_at": {
                     "type": "string",
-                    "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
+                    "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n* `updated_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n* `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
                   },
                   "to_created_at": {
                     "type": "string",
-                    "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
+                    "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n* `created_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n* `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
                   },
                   "to_updated_at": {
                     "type": "string",
-                    "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
+                    "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n* `updated_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n* `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
                   },
                   "type": {
                     "type": "string",
@@ -114537,7 +114652,9 @@
                       "BALANCE_REPORT",
                       "ACCOUNT_REPORT",
                       "ISSUING_TRANSACTION_REPORT",
-                      "APPLICATION_FEE_REPORT"
+                      "APPLICATION_FEE_REPORT",
+                      "PLATFORM_LIQUIDITY_TRANSACTION_REPORT",
+                      "PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT"
                     ],
                     "x-enumDescriptions": {
                       "TRANSACTION_RECON_REPORT": "All financial transactions having occurred on your Platform account and connected accounts.",
@@ -114545,7 +114662,9 @@
                       "BALANCE_REPORT": "Balances of your Platform account and connected accounts.",
                       "ACCOUNT_REPORT": "Account-related information for your Platform and connected accounts, including KYC & KYB information.",
                       "ISSUING_TRANSACTION_REPORT": "All issuing transactions having occurred on your Platform account and connected accounts.",
-                      "APPLICATION_FEE_REPORT": "A consolidated list of application fees that Platform account charges their connected accounts."
+                      "APPLICATION_FEE_REPORT": "A consolidated list of application fees that a Platform account charges its connected accounts.",
+                      "PLATFORM_LIQUIDITY_TRANSACTION_REPORT": "Transactions across all Platform Liquidity Program accounts under your Platform account, including both program accounts and program subscriber accounts.",
+                      "PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT": "End-of-day balances across all Platform Liquidity Program accounts under your Platform account, with one record per program, currency, and UTC calendar day."
                     }
                   }
                 }
@@ -116746,7 +116865,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account",
         "x-badges": [
           {
@@ -132702,7 +132821,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -132728,6 +132847,16 @@
                   "notes": {
                     "description": "The notes of the uploaded file, max length is 50 characters.",
                     "type": "string"
+                  },
+                  "purpose": {
+                    "description": "The intended use case of the file. Files are general-purpose by default; set a purpose when the endpoint you'll pass the file to requires one, so the file is provisioned correctly for that use case. Omit otherwise.",
+                    "type": "string",
+                    "enum": [
+                      "SPEND_ATTACHMENT"
+                    ],
+                    "x-enumDescriptions": {
+                      "SPEND_ATTACHMENT": "Attaching a supporting document to a Spend resource as evidence, such as an expense receipt or purchase order invoice."
+                    }
                   }
                 },
                 "required": [
@@ -135636,7 +135765,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -135752,7 +135881,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -135896,7 +136025,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -136032,7 +136161,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     },
@@ -136197,7 +136326,7 @@
             }
           }
         ],
-        "x-oauthSupported": true,
+        "x-oauthSupported": false,
         "x-resourceLevel": "account"
       }
     }
@@ -139001,6 +139130,17 @@
           "reason_codes": {
             "type": "array",
             "description": "Specific codes that indicate the reason a capability is disabled. \nFor more information on the codes related to payment method capabilities, refer to this [page](/docs/payments-for-platforms/connected-accounts/onboard-connected-accounts/kyb-and-onboarding/native-api).",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mcc": {
+            "type": "string",
+            "description": "The MCC applied by default for this payment method; the first of `mcc_candidates`. Only present for `payments_*` capabilities once an MCC has been assigned."
+          },
+          "mcc_candidates": {
+            "type": "array",
+            "description": "The approved MCCs for this payment method. The first equals `mcc`; the rest are alternates with no priority order. Only present for `payments_*` capabilities once an MCC has been assigned.",
             "items": {
               "type": "string"
             }
@@ -143382,6 +143522,10 @@
           "posted_at": {
             "type": "string",
             "description": "The time this change posted to balance."
+          },
+          "reference": {
+            "type": "string",
+            "description": "Reference associated with the originating transaction. The value is derived from the appropriate reference field on the source transaction and may vary depending on the transaction type. See [`reference` mappings](/docs/banking-as-a-service/reporting/reporting-api/balance-history-mappings)."
           },
           "source": {
             "type": "string",
@@ -151616,6 +151760,18 @@
           "user_id": {
             "type": "string",
             "description": "Unique identifier of a user in payment method provider side. Only present after the payment has been completed or the consent has been verified."
+          },
+          "channel": {
+            "type": "string",
+            "description": "Payment channel. Default: `ecom`.",
+            "enum": [
+              "pos",
+              "ecom"
+            ],
+            "x-enumDescriptions": {
+              "pos": "A point-of-sale (POS) transaction.",
+              "ecom": "A online e-commerce transaction."
+            }
           }
         },
         "description": "Alipay CN information."
@@ -151638,6 +151794,18 @@
           "user_id": {
             "type": "string",
             "description": "Unique identifier of a user in payment method provider side. Only present after the payment has been completed or the consent has been verified."
+          },
+          "channel": {
+            "type": "string",
+            "description": "Payment channel. Default: `ecom`.",
+            "enum": [
+              "pos",
+              "ecom"
+            ],
+            "x-enumDescriptions": {
+              "pos": "A point-of-sale (POS) transaction.",
+              "ecom": "A online e-commerce transaction."
+            }
           }
         },
         "description": "Alipay HK information."
@@ -152692,7 +152860,15 @@
         "properties": {
           "channel": {
             "type": "string",
-            "description": "The payment channel."
+            "description": "Payment channel. Default: `ecom`.",
+            "enum": [
+              "pos",
+              "ecom"
+            ],
+            "x-enumDescriptions": {
+              "pos": "A point-of-sale (POS) transaction.",
+              "ecom": "A online e-commerce transaction."
+            }
           },
           "shopper_name": {
             "type": "string",
@@ -153089,7 +153265,15 @@
         "properties": {
           "channel": {
             "type": "string",
-            "description": "The payment channel."
+            "description": "Payment channel. Default: `ecom`.",
+            "enum": [
+              "pos",
+              "ecom"
+            ],
+            "x-enumDescriptions": {
+              "pos": "A point-of-sale (POS) transaction.",
+              "ecom": "A online e-commerce transaction."
+            }
           },
           "flow": {
             "type": "string",
@@ -162134,11 +162318,11 @@
           },
           "from_created_at": {
             "type": "string",
-            "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
+            "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n * `created_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n * `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
           },
           "from_updated_at": {
             "type": "string",
-            "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
+            "description": "Timestamp (inclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n * `updated_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n * `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
           },
           "id": {
             "type": "string",
@@ -162155,15 +162339,15 @@
           },
           "to_created_at": {
             "type": "string",
-            "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
+            "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `created_at` field in the `TRANSACTION_RECON_REPORT`\n * `created_at` field in the `PAYOUT_REPORT`\n * `created_at` field in the `ISSUING_TRANSACTION_REPORT`\n * `created_at` field in the `APPLICATION_FEE_REPORT`\n * `created_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n * `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_created_at` = `2023-01-01` and `to_created_at` = `2023-01-02` to obtain records created during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_created_at` and `to_created_at` is 366 days."
           },
           "to_updated_at": {
             "type": "string",
-            "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
+            "description": "Timestamp (exclusive, in ISO8601 standard, UTC) to specify data records that the report should include. This parameter is a filter for:\n * `last_update` field in the `TRANSACTION_RECON_REPORT`\n * `last_update` field in the `PAYOUT_REPORT`\n * `last_update` field in the `ISSUING_TRANSACTION_REPORT`\n * `last_update` field in the `APPLICATION_FEE_REPORT`\n * `updated_at` field in the `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`\n * `date` field in the `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`\n\nFor example, request a Platform report with `from_updated_at` = `2023-01-01` and `to_updated_at` = `2023-01-02` to obtain records last updated during the day `2023-01-01` in UTC.\n\nThe max interval size between `from_updated_at` and `to_updated_at` is 366 days."
           },
           "type": {
             "type": "string",
-            "description": "Type of report requested. Currently supported report types:\n * `TRANSACTION_RECON_REPORT`: all financial transactions having occurred on your Platform account and connected accounts\n * `PAYOUT_REPORT`: details of all payouts out of your Platform account and connected accounts, across all payout statuses\n * `BALANCE_REPORT`: balances of your Platform account and connected accounts\n * `ACCOUNT_REPORT`: account-related information for your Platform and connected accounts, including KYC & KYB information\n * `ISSUING_TRANSACTION_REPORT`: all issuing transactions having occurred on your Platform account and connected accounts\n * `APPLICATION_FEE_REPORT`: a consolidated list of application fees that Platform account charges their connected accounts."
+            "description": "Type of report requested. Currently supported report types:\n * `TRANSACTION_RECON_REPORT`: All financial transactions having occurred on your Platform account and connected accounts.\n * `PAYOUT_REPORT`: Details of all payouts out of your Platform account and connected accounts, across all payout statuses.\n * `BALANCE_REPORT`: Balances of your Platform account and connected accounts.\n * `ACCOUNT_REPORT`: Account-related information for your Platform and connected accounts, including KYC & KYB information.\n * `ISSUING_TRANSACTION_REPORT`: All issuing transactions having occurred on your Platform account and connected accounts.\n * `APPLICATION_FEE_REPORT`: A consolidated list of application fees that a Platform account charges its connected accounts.\n * `PLATFORM_LIQUIDITY_TRANSACTION_REPORT`: Transactions across all Platform Liquidity Program accounts under your Platform account, including both program accounts and program subscriber accounts.\n * `PLATFORM_LIQUIDITY_EOD_BALANCE_REPORT`: End-of-day balances across all Platform Liquidity Program accounts under your Platform account, with one record per program, currency, and UTC calendar day."
           }
         }
       },
@@ -168605,7 +168789,7 @@
           },
           "legal_entity_id": {
             "type": "string",
-            "description": "Unique identifier of the business entity associated with this expense. Used for accounting segregation and compliance reporting across different business entities."
+            "description": "Unique identifier of the legal entity associated with this expense. Used for accounting segregation and compliance reporting across different legal entities."
           },
           "card_id": {
             "type": "string",
@@ -169066,7 +169250,7 @@
           },
           "legal_entity_id": {
             "type": "string",
-            "description": "Unique identifier of the business entity associated with this reimbursement report. Used for accounting segregation and compliance reporting across different business entities."
+            "description": "Unique identifier of the legal entity associated with this reimbursement report. Used for accounting segregation and compliance reporting across different legal entities."
           },
           "name": {
             "type": "string",
