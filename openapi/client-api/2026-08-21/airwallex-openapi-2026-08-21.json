@@ -21232,12 +21232,22 @@
         "operationId": "listBillingTransactions",
         "parameters": [
           {
-            "description": "ID of the [Invoice](/docs/api/billing/invoices) this Billing Transaction is associated with.",
+            "description": "ID of the [Invoice](/docs/api/billing/invoices) this Billing Transaction is associated with. Exactly one of `invoice_id` or `credit_note_id` is required.",
             "in": "query",
             "name": "invoice_id",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "description": "ID of the [Credit Note](/docs/api/billing/credit_notes) this Billing Transaction is associated with. Exactly one of `invoice_id` or `credit_note_id` is required.",
+            "in": "query",
+            "name": "credit_note_id",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "crn_hkpda1313adfadfa"
             }
           },
           {
@@ -101545,8 +101555,8 @@
         "x-scope": [
           {
             "scope": "platform_account:read",
-            "group": "Embedded Finance",
-            "resource_name": "Account"
+            "group": "Core Resources",
+            "resource_name": "Account Details"
           }
         ],
         "x-resourceLevel": "account"
@@ -105699,7 +105709,7 @@
         "x-scope": [
           {
             "scope": "account.wallet_info:read",
-            "group": "Accounts",
+            "group": "Core Resources",
             "resource_name": "Wallet Info"
           }
         ],
@@ -136186,7 +136196,7 @@
           {
             "scope": "file:write",
             "group": "Supporting Services",
-            "resource_name": "Upload Files"
+            "resource_name": "Files"
           }
         ],
         "x-oauthSupported": false,
@@ -136319,7 +136329,7 @@
           {
             "scope": "file:write",
             "group": "Supporting Services",
-            "resource_name": "Upload Files"
+            "resource_name": "Files"
           }
         ],
         "servers": [
@@ -146737,7 +146747,7 @@
           },
           "external_id": {
             "type": "string",
-            "description": "ID of the [Payment Intent](/docs/api/payments/payment_intents) associated with the Billing Transaction."
+            "description": "ID of the [Payment Intent](/docs/api/payments/payment_intents) associated with the Billing Transaction when type is `PAYMENT`, or ID of the [Refund](/docs/api/payments/refunds) when type is `REFUND`."
           },
           "id": {
             "type": "string",
@@ -146782,6 +146792,10 @@
           "updated_at": {
             "type": "string",
             "description": "Time when this billing transaction was last updated."
+          },
+          "credit_note_id": {
+            "type": "string",
+            "description": "ID of the [Credit Note](/docs/api/billing/credit_notes) this Billing Transaction is associated with."
           }
         }
       },

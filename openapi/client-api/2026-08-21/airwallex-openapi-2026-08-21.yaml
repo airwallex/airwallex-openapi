@@ -12477,12 +12477,19 @@ paths:
       description: Retrieves a list of Billing Transactions based on the query parameters.
       operationId: listBillingTransactions
       parameters:
-        - description: ID of the [Invoice](/docs/api/billing/invoices) this Billing Transaction is associated with.
+        - description: ID of the [Invoice](/docs/api/billing/invoices) this Billing Transaction is associated with. Exactly one of `invoice_id` or `credit_note_id` is required.
           in: query
           name: invoice_id
-          required: true
+          required: false
           schema:
             type: string
+        - description: ID of the [Credit Note](/docs/api/billing/credit_notes) this Billing Transaction is associated with. Exactly one of `invoice_id` or `credit_note_id` is required.
+          in: query
+          name: credit_note_id
+          required: false
+          schema:
+            type: string
+            example: crn_hkpda1313adfadfa
         - description: The start date of `created_at` in ISO8601 format (inclusive).
           in: query
           name: from_created_at
@@ -57825,8 +57832,8 @@ paths:
       x-oauthSupported: false
       x-scope:
         - scope: platform_account:read
-          group: Embedded Finance
-          resource_name: Account
+          group: Core Resources
+          resource_name: Account Details
       x-resourceLevel: account
   /api/v1/accounts:
     get:
@@ -59551,7 +59558,7 @@ paths:
       x-oauthSupported: false
       x-scope:
         - scope: account.wallet_info:read
-          group: Accounts
+          group: Core Resources
           resource_name: Wallet Info
       x-oboSupported: true
       x-resourceLevel: account
@@ -77224,7 +77231,7 @@ paths:
       x-scope:
         - scope: file:write
           group: Supporting Services
-          resource_name: Upload Files
+          resource_name: Files
       x-oauthSupported: false
       x-oboSupported: true
       x-resourceLevel: account
@@ -77310,7 +77317,7 @@ paths:
       x-scope:
         - scope: file:write
           group: Supporting Services
-          resource_name: Upload Files
+          resource_name: Files
       servers:
         - url: https://files.airwallex.com
           description: Production
@@ -84522,7 +84529,7 @@ components:
           description: The currency of the Billing Transaction in 3-letter ISO-4217 format.
         external_id:
           type: string
-          description: ID of the [Payment Intent](/docs/api/payments/payment_intents) associated with the Billing Transaction.
+          description: ID of the [Payment Intent](/docs/api/payments/payment_intents) associated with the Billing Transaction when type is `PAYMENT`, or ID of the [Refund](/docs/api/payments/refunds) when type is `REFUND`.
         id:
           type: string
           description: ID of the Billing Transaction object.
@@ -84556,6 +84563,9 @@ components:
         updated_at:
           type: string
           description: Time when this billing transaction was last updated.
+        credit_note_id:
+          type: string
+          description: ID of the [Credit Note](/docs/api/billing/credit_notes) this Billing Transaction is associated with.
     CursorPaginationClientApiResponseTransaction:
       required:
         - items
