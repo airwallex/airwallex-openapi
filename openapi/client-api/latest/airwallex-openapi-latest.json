@@ -3869,6 +3869,20 @@
                     "value": {
                       "automatic_tax_status": "APPLIED",
                       "back_url": "https://www.airwallex.com/back",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "cancelled_at": "2025-05-10T18:00:30+0000",
                       "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -4012,6 +4026,20 @@
             "response_body": {
               "automatic_tax_status": "APPLIED",
               "back_url": "https://www.airwallex.com/back",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "cancelled_at": "2025-05-10T18:00:30+0000",
               "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -4723,6 +4751,20 @@
                     "value": {
                       "automatic_tax_status": "APPLIED",
                       "back_url": "https://www.airwallex.com/back",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "cancelled_at": "2025-05-10T18:00:30+0000",
                       "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -4978,6 +5020,20 @@
             "response_body": {
               "automatic_tax_status": "APPLIED",
               "back_url": "https://www.airwallex.com/back",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "cancelled_at": "2025-05-10T18:00:30+0000",
               "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -5183,6 +5239,20 @@
                         {
                           "automatic_tax_status": "APPLIED",
                           "back_url": "https://www.airwallex.com/back",
+                          "billing_customer": {
+                            "address": {
+                              "city": "Shanghai",
+                              "country_code": "CN",
+                              "postcode": "100000",
+                              "state": "Shanghai",
+                              "street": "Pudong District"
+                            },
+                            "email": "john.doe@example.com",
+                            "name": "John Doe",
+                            "phone_number": "+1234567890",
+                            "tax_identification_number": "123-45-6789",
+                            "type": "INDIVIDUAL"
+                          },
                           "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                           "cancelled_at": "2025-05-10T18:00:30+0000",
                           "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -5328,6 +5398,20 @@
                 {
                   "automatic_tax_status": "APPLIED",
                   "back_url": "https://www.airwallex.com/back",
+                  "billing_customer": {
+                    "address": {
+                      "city": "Shanghai",
+                      "country_code": "CN",
+                      "postcode": "100000",
+                      "state": "Shanghai",
+                      "street": "Pudong District"
+                    },
+                    "email": "john.doe@example.com",
+                    "name": "John Doe",
+                    "phone_number": "+1234567890",
+                    "tax_identification_number": "123-45-6789",
+                    "type": "INDIVIDUAL"
+                  },
                   "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                   "cancelled_at": "2025-05-10T18:00:30+0000",
                   "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -5484,6 +5568,20 @@
                     "value": {
                       "automatic_tax_status": "APPLIED",
                       "back_url": "https://www.airwallex.com/back",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "cancelled_at": "2025-05-10T18:00:30+0000",
                       "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -5627,6 +5725,20 @@
             "response_body": {
               "automatic_tax_status": "APPLIED",
               "back_url": "https://www.airwallex.com/back",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "cancelled_at": "2025-05-10T18:00:30+0000",
               "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -5809,6 +5921,20 @@
                     "value": {
                       "automatic_tax_status": "APPLIED",
                       "back_url": "https://www.airwallex.com/back",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "cancelled_at": "2025-05-10T18:00:30+0000",
                       "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -5957,6 +6083,20 @@
             "response_body": {
               "automatic_tax_status": "APPLIED",
               "back_url": "https://www.airwallex.com/back",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "cancelled_at": "2025-05-10T18:00:30+0000",
               "client_secret": "eyJhbGciOiJIUzI1NiJ9...",
@@ -10726,6 +10866,20 @@
                         }
                       ],
                       "automatic_tax_status": "APPLIED",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -10880,6 +11034,20 @@
                 }
               ],
               "automatic_tax_status": "APPLIED",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
               "created_at": "2022-01-01T10:15:30+0000",
@@ -11204,6 +11372,20 @@
                         "routing_number": "026073150",
                         "reference": "QCNLQC"
                       },
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -11367,6 +11549,20 @@
                 "bank_name": "Community Federal Savings Bank",
                 "routing_number": "026073150",
                 "reference": "QCNLQC"
+              },
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
               },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
@@ -11621,6 +11817,20 @@
                         }
                       ],
                       "automatic_tax_status": "APPLIED",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -11744,6 +11954,20 @@
                 }
               ],
               "automatic_tax_status": "APPLIED",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
               "created_at": "2022-01-01T10:15:30+0000",
@@ -11879,6 +12103,20 @@
                         "routing_number": "026073150",
                         "reference": "QCNLQC"
                       },
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -12004,6 +12242,20 @@
                 "bank_name": "Community Federal Savings Bank",
                 "routing_number": "026073150",
                 "reference": "QCNLQC"
+              },
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
               },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
@@ -12199,6 +12451,20 @@
                             }
                           ],
                           "automatic_tax_status": "APPLIED",
+                          "billing_customer": {
+                            "address": {
+                              "city": "Shanghai",
+                              "country_code": "CN",
+                              "postcode": "100000",
+                              "state": "Shanghai",
+                              "street": "Pudong District"
+                            },
+                            "email": "john.doe@example.com",
+                            "name": "John Doe",
+                            "phone_number": "+1234567890",
+                            "tax_identification_number": "123-45-6789",
+                            "type": "INDIVIDUAL"
+                          },
                           "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                           "collection_method": "AUTO_CHARGE",
                           "created_at": "2022-01-01T10:15:30+0000",
@@ -12319,6 +12585,20 @@
                     }
                   ],
                   "automatic_tax_status": "APPLIED",
+                  "billing_customer": {
+                    "address": {
+                      "city": "Shanghai",
+                      "country_code": "CN",
+                      "postcode": "100000",
+                      "state": "Shanghai",
+                      "street": "Pudong District"
+                    },
+                    "email": "john.doe@example.com",
+                    "name": "John Doe",
+                    "phone_number": "+1234567890",
+                    "tax_identification_number": "123-45-6789",
+                    "type": "INDIVIDUAL"
+                  },
                   "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                   "collection_method": "AUTO_CHARGE",
                   "created_at": "2022-01-01T10:15:30+0000",
@@ -12930,6 +13210,20 @@
                         }
                       ],
                       "automatic_tax_status": "APPLIED",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -13047,6 +13341,20 @@
                 }
               ],
               "automatic_tax_status": "APPLIED",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
               "created_at": "2022-01-01T10:15:30+0000",
@@ -13178,6 +13486,20 @@
                       "amount_due": 0,
                       "applied_discounts": [],
                       "automatic_tax_status": "DISABLED",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "created_at": "2022-01-01T10:15:30+0000",
                       "currency": "USD",
@@ -13236,6 +13558,20 @@
               "amount_due": 0,
               "applied_discounts": [],
               "automatic_tax_status": "DISABLED",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "created_at": "2022-01-01T10:15:30+0000",
               "currency": "USD",
@@ -13960,6 +14296,20 @@
                         "routing_number": "026073150",
                         "reference": "QCNLQC"
                       },
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -14085,6 +14435,20 @@
                 "bank_name": "Community Federal Savings Bank",
                 "routing_number": "026073150",
                 "reference": "QCNLQC"
+              },
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
               },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
@@ -14845,6 +15209,20 @@
                         }
                       ],
                       "automatic_tax_status": "APPLIED",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -15010,6 +15388,20 @@
                 }
               ],
               "automatic_tax_status": "APPLIED",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
               "created_at": "2022-01-01T10:15:30+0000",
@@ -15255,6 +15647,20 @@
                         }
                       ],
                       "automatic_tax_status": "APPLIED",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -15392,6 +15798,20 @@
                 }
               ],
               "automatic_tax_status": "APPLIED",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
               "created_at": "2022-01-01T10:15:30+0000",
@@ -15519,6 +15939,20 @@
                         }
                       ],
                       "automatic_tax_status": "APPLIED",
+                      "billing_customer": {
+                        "address": {
+                          "city": "Shanghai",
+                          "country_code": "CN",
+                          "postcode": "100000",
+                          "state": "Shanghai",
+                          "street": "Pudong District"
+                        },
+                        "email": "john.doe@example.com",
+                        "name": "John Doe",
+                        "phone_number": "+1234567890",
+                        "tax_identification_number": "123-45-6789",
+                        "type": "INDIVIDUAL"
+                      },
                       "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
                       "collection_method": "AUTO_CHARGE",
                       "created_at": "2022-01-01T10:15:30+0000",
@@ -15636,6 +16070,20 @@
                 }
               ],
               "automatic_tax_status": "APPLIED",
+              "billing_customer": {
+                "address": {
+                  "city": "Shanghai",
+                  "country_code": "CN",
+                  "postcode": "100000",
+                  "state": "Shanghai",
+                  "street": "Pudong District"
+                },
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "phone_number": "+1234567890",
+                "tax_identification_number": "123-45-6789",
+                "type": "INDIVIDUAL"
+              },
               "billing_customer_id": "bcus_hkpd7fedfgb004apkvs",
               "collection_method": "AUTO_CHARGE",
               "created_at": "2022-01-01T10:15:30+0000",
@@ -37948,7 +38396,7 @@
                                 },
                                 "interval": {
                                   "type": "string",
-                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `ALL_TIME`."
+                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `QUARTERLY`, `YEARLY`, `ALL_TIME`."
                                 }
                               }
                             }
@@ -37973,7 +38421,7 @@
                                 },
                                 "interval": {
                                   "type": "string",
-                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `ALL_TIME`."
+                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `QUARTERLY`, `YEARLY`, `ALL_TIME`."
                                 }
                               }
                             }
@@ -39801,7 +40249,7 @@
                                 },
                                 "interval": {
                                   "type": "string",
-                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `ALL_TIME`."
+                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `QUARTERLY`, `YEARLY`, `ALL_TIME`."
                                 }
                               }
                             }
@@ -39826,7 +40274,7 @@
                                 },
                                 "interval": {
                                   "type": "string",
-                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `ALL_TIME`."
+                                  "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `QUARTERLY`, `YEARLY`, `ALL_TIME`."
                                 }
                               }
                             }
@@ -144698,6 +145146,35 @@
         },
         "description": "Payer's address details."
       },
+      "CustomerAddress": {
+        "required": [
+          "country_code"
+        ],
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "City of the address."
+          },
+          "country_code": {
+            "type": "string",
+            "description": "The two-letter country code in ISO 3166-1 alpha-2 format."
+          },
+          "postcode": {
+            "type": "string",
+            "description": "PostCode of the address."
+          },
+          "state": {
+            "type": "string",
+            "description": "State or province of the address."
+          },
+          "street": {
+            "type": "string",
+            "description": "Street of the address."
+          }
+        },
+        "description": "Address of the billing customer."
+      },
       "CouponDiscountDataRequest": {
         "required": [
           "id"
@@ -144940,6 +145417,10 @@
           "back_url": {
             "type": "string",
             "description": "If set, the hosted checkout page displays a back button which allows customers to cancel the flow and be directed to this URL."
+          },
+          "billing_customer": {
+            "$ref": "#/components/schemas/Billing_BillingCustomerSnapshot",
+            "description": "Snapshot of the [Billing Customer](/docs/api/billing/billing_customers) captured on this Billing Checkout."
           },
           "billing_customer_id": {
             "type": "string",
@@ -145736,35 +146217,6 @@
           }
         }
       },
-      "CustomerAddress": {
-        "required": [
-          "country_code"
-        ],
-        "type": "object",
-        "properties": {
-          "city": {
-            "type": "string",
-            "description": "City of the address."
-          },
-          "country_code": {
-            "type": "string",
-            "description": "The two-letter country code in ISO 3166-1 alpha-2 format."
-          },
-          "postcode": {
-            "type": "string",
-            "description": "PostCode of the address."
-          },
-          "state": {
-            "type": "string",
-            "description": "State or province of the address."
-          },
-          "street": {
-            "type": "string",
-            "description": "Street of the address."
-          }
-        },
-        "description": "Address of the billing customer."
-      },
       "CustomerResponse": {
         "required": [
           "automatic_tax_eligibility",
@@ -146275,6 +146727,10 @@
           "bank_transfer_instructions": {
             "$ref": "#/components/schemas/InvoiceBankTransferInstructions",
             "description": "Bank transfer instructions for paying this Invoice. Included when bank transfer is enabled, the Invoice currency is supported, and the Billing Customer is eligible."
+          },
+          "billing_customer": {
+            "$ref": "#/components/schemas/Billing_BillingCustomerSnapshot",
+            "description": "Snapshot of the [Billing Customer](/docs/api/billing/billing_customers) captured on this invoice."
           },
           "billing_customer_id": {
             "type": "string",
@@ -148152,6 +148608,44 @@
             "description": "Time when this usage event was voided."
           }
         }
+      },
+      "Billing_BillingCustomerSnapshot": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/CustomerAddress",
+            "description": "Address of the billing customer."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address of the billing customer."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the billing customer."
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "Phone number of the billing customer."
+          },
+          "tax_identification_number": {
+            "type": "string",
+            "description": "Tax identification number of the billing customer."
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the billing customer.",
+            "enum": [
+              "BUSINESS",
+              "INDIVIDUAL"
+            ],
+            "x-enumDescriptions": {
+              "BUSINESS": "A business entity billing customer.",
+              "INDIVIDUAL": "An individual billing customer."
+            }
+          }
+        },
+        "description": "Snapshot of the billing customer."
       },
       "Billing_PrefilledCustomerData": {
         "type": "object",
@@ -153553,7 +154047,7 @@
           },
           "card_transaction_data": {
             "$ref": "#/components/schemas/NonPciCardTransactionData",
-            "description": "Card transaction identifiers associated with this authorization. Replaces the lifecycle_id field; card_transaction_lifecycle_id carries the same value as the old lifecycle_id. Omitted for transactions that have no associated card transaction lifecycle."
+            "description": "Card transaction identifiers associated with this authorization. Replaces the lifecycle_id field. Omitted for transactions that have no associated card transaction lifecycle."
           },
           "masked_card_number": {
             "type": "string",
@@ -154403,7 +154897,7 @@
           },
           "interval": {
             "type": "string",
-            "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `ALL_TIME`."
+            "description": "Transaction limit interval. This field is mandatory and must be one of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `QUARTERLY`, `YEARLY`, `ALL_TIME`."
           }
         }
       },
@@ -154917,7 +155411,7 @@
           },
           "interval": {
             "type": "string",
-            "description": "Transaction limit interval. One of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `ALL_TIME`."
+            "description": "Transaction limit interval. One of: `PER_TRANSACTION`, `DAILY`, `WEEKLY`, `MONTHLY`, `QUARTERLY`, `YEARLY`, `ALL_TIME`."
           },
           "remaining": {
             "type": "number",
@@ -155571,7 +156065,7 @@
           },
           "card_transaction_data": {
             "$ref": "#/components/schemas/NonPciCardTransactionData",
-            "description": "Card transaction identifiers associated with this transaction. Replaces the lifecycle_id field; card_transaction_lifecycle_id carries the same value as the old lifecycle_id. Omitted for transactions that have no associated card transaction lifecycle."
+            "description": "Card transaction identifiers associated with this transaction. Replaces the lifecycle_id field. Omitted for transactions that have no associated card transaction lifecycle."
           },
           "masked_card_number": {
             "type": "string",
