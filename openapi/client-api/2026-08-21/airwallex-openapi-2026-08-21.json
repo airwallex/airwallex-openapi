@@ -347,8 +347,18 @@
     },
     {
       "name": "Payouts > Transfers",
-      "description": "A [transfer](/docs/payouts/transfers/create-a-transfer) resource is created when you send funds to a beneficiary, it details the beneficiary, bank details, the amount being paid, its status and other relevant information. You can also create the transfer by using the beneficiary unique identifier which was previously created using the Beneficiary resource.",
+      "description": "A [transfer](/docs/payouts/transfers/create-a-transfer) resource is created when you send funds to a beneficiary, it details the beneficiary, bank details, the amount being paid, its status and other relevant information. You can also create the transfer by using the beneficiary unique identifier which was previously created using the Beneficiary resource. created using Beneficiary resource.",
       "x-displayName": "Transfers"
+    },
+    {
+      "name": "Tax > Beneficiary Tax Profiles",
+      "description": "A beneficiary tax profile holds the US tax information collected from a recipient via an underlying W-9 or W-8 form. It is created per recipient (identified by `external_id`) and is used as the source of recipient information when generating 1099 forms. Recipients can submit amendments to an existing profile when their information changes or the profile fails validation.",
+      "x-displayName": "Beneficiary Tax Profiles"
+    },
+    {
+      "name": "Tax > Beneficiary Tax Statements",
+      "description": "A beneficiary tax statement is an annual 1099 form (1099-NEC or 1099-K) aggregating the taxable payments made to a recipient in a tax year, together with payer and recipient information. Use these APIs to retrieve statements, file them to the IRS, and download the rendered PDF.",
+      "x-displayName": "Beneficiary Tax Statements"
     },
     {
       "name": "Risk > Fraud Feedback (Issuing)",
@@ -39110,7 +39120,7 @@
           "Issuing > Cards"
         ],
         "summary": "3|List all Cards",
-        "description": "Get cards issued under an account. Will default to a 30 day period unless both *to* and *from* created_at request fields are populated.",
+        "description": "Get cards issued under an account. Will default to a 90 day period unless both *to* and *from* created_at request fields are populated.",
         "operationId": "listCards",
         "parameters": [
           {
@@ -48046,7 +48056,39 @@
                         "ds_data": {}
                       },
                       "created_at": "2023-10-01T12:00:00+00:00",
-                      "updated_at": "2023-10-01T12:00:00+00:00"
+                      "updated_at": "2023-10-01T12:00:00+00:00",
+                      "agentic_payment_data": {
+                        "fulfillment": [
+                          {
+                            "id": "ful_grp_1",
+                            "type": "shipping",
+                            "line_item_ids": [
+                              "line_item_1"
+                            ],
+                            "selected_destination_id": "ful_dest_1",
+                            "selected_option_id": "ful_opt_1"
+                          },
+                          {
+                            "id": "ful_grp_2",
+                            "type": "shipping",
+                            "line_item_ids": [
+                              "line_item_1"
+                            ],
+                            "selected_destination_id": "ful_dest_1",
+                            "selected_option_id": "ful_opt_2"
+                          },
+                          {
+                            "id": "ful_grp_3",
+                            "type": "pickup",
+                            "line_item_ids": [
+                              "line_item_3",
+                              "line_item_4"
+                            ],
+                            "selected_destination_id": "ful_dest_2",
+                            "selected_option_id": "ful_opt_1"
+                          }
+                        ]
+                      }
                     }
                   }
                 }
@@ -48129,7 +48171,39 @@
                 "ds_data": {}
               },
               "created_at": "2023-10-01T12:00:00+00:00",
-              "updated_at": "2023-10-01T12:00:00+00:00"
+              "updated_at": "2023-10-01T12:00:00+00:00",
+              "agentic_payment_data": {
+                "fulfillment": [
+                  {
+                    "id": "ful_grp_1",
+                    "type": "shipping",
+                    "line_item_ids": [
+                      "line_item_1"
+                    ],
+                    "selected_destination_id": "ful_dest_1",
+                    "selected_option_id": "ful_opt_1"
+                  },
+                  {
+                    "id": "ful_grp_2",
+                    "type": "shipping",
+                    "line_item_ids": [
+                      "line_item_1"
+                    ],
+                    "selected_destination_id": "ful_dest_1",
+                    "selected_option_id": "ful_opt_2"
+                  },
+                  {
+                    "id": "ful_grp_3",
+                    "type": "pickup",
+                    "line_item_ids": [
+                      "line_item_3",
+                      "line_item_4"
+                    ],
+                    "selected_destination_id": "ful_dest_2",
+                    "selected_option_id": "ful_opt_1"
+                  }
+                ]
+              }
             }
           }
         ],
@@ -53400,6 +53474,9 @@
               },
               "paypal": {
                 "value": "int_hkpdskz7vg1xc7uscdj"
+              },
+              "agentic": {
+                "value": "int_hkpdskz7vg1xc7uscdj"
               }
             }
           }
@@ -53413,6 +53490,10 @@
                   "request_id"
                 ],
                 "properties": {
+                  "agentic_payment_data": {
+                    "$ref": "#/components/schemas/AgenticPaymentData",
+                    "description": "Agentic payment data for agent-initiated payments. Required when the payment method is an agentic token."
+                  },
                   "customer_id": {
                     "type": "string",
                     "description": "Customer who intends to pay for the Payment Intent."
@@ -54266,6 +54347,10 @@
                                 "description": "Token requestor unique identifier (Provided by card schemes during onboarding)."
                               }
                             }
+                          },
+                          "agentic_token": {
+                            "type": "string",
+                            "description": "Identifier of the agentic payment token (Airwallex tokenizer). Required for token-funded agentic payments; `agentic_payment_data` must be provided alongside it."
                           },
                           "billing": {
                             "type": "object",
@@ -55983,6 +56068,51 @@
                       }
                     }
                   }
+                },
+                "agentic": {
+                  "value": {
+                    "request_id": "d917ad44-6ae4-447e-a534-cce4ceebfd2e",
+                    "payment_method": {
+                      "type": "card",
+                      "card": {
+                        "agentic_token": "tok_agentic_abc123"
+                      }
+                    },
+                    "agentic_payment_data": {
+                      "checkout_session_id": "agent_session_abc123",
+                      "fulfillment": [
+                        {
+                          "id": "ful_grp_1",
+                          "type": "shipping",
+                          "line_item_ids": [
+                            "line_item_1"
+                          ],
+                          "selected_destination_id": "ful_dest_1",
+                          "selected_option_id": "ful_opt_1"
+                        },
+                        {
+                          "id": "ful_grp_2",
+                          "type": "shipping",
+                          "line_item_ids": [
+                            "line_item_1"
+                          ],
+                          "selected_destination_id": "ful_dest_1",
+                          "selected_option_id": "ful_opt_2"
+                        },
+                        {
+                          "id": "ful_grp_3",
+                          "type": "pickup",
+                          "line_item_ids": [
+                            "line_item_3",
+                            "line_item_4"
+                          ],
+                          "selected_destination_id": "ful_dest_2",
+                          "selected_option_id": "ful_opt_1"
+                        }
+                      ]
+                    },
+                    "return_url": "https://www.airwallex.com"
+                  }
                 }
               }
             }
@@ -56197,6 +56327,83 @@
                         "created_at": "2025-01-31T07:02:15+00:00",
                         "updated_at": "2025-01-31T07:02:15+00:00",
                         "settle_via": "airwallex"
+                      }
+                    }
+                  },
+                  "agentic": {
+                    "value": {
+                      "id": "int_hkpdskz7vg1xc7uscdj",
+                      "request_id": "d917ad44-6ae4-447e-a534-cce4ceebfd2e",
+                      "amount": 100,
+                      "currency": "USD",
+                      "status": "SUCCEEDED",
+                      "merchant_order_id": "D202503210001",
+                      "descriptor": "Airwallex - Test Descriptor",
+                      "metadata": {
+                        "foo": "bar"
+                      },
+                      "created_at": "2025-01-31T06:57:10+00:00",
+                      "updated_at": "2025-01-31T07:02:15+00:00",
+                      "latest_payment_attempt": {
+                        "id": "att_hkpdskz7vg1xc7uscdj",
+                        "amount": 100,
+                        "currency": "USD",
+                        "payment_method": {
+                          "type": "card",
+                          "card": {
+                            "expiry_month": "03",
+                            "expiry_year": "2030",
+                            "name": "John Doe",
+                            "bin": "403550",
+                            "last4": "0008",
+                            "brand": "visa",
+                            "issuer_country_code": "US",
+                            "card_type": "CREDIT",
+                            "fingerprint": "AKvN4TqxI04SNFZ+oYRXaECtDA==",
+                            "number_type": "PAN"
+                          }
+                        },
+                        "payment_intent_id": "int_hkpdskz7vg1xc7uscdj",
+                        "status": "AUTHORIZED",
+                        "payment_method_transaction_id": "1234567890",
+                        "provider_original_response_code": "00",
+                        "authorization_code": "123456",
+                        "captured_amount": 0,
+                        "created_at": "2025-01-31T07:02:15+00:00",
+                        "updated_at": "2025-01-31T07:02:15+00:00",
+                        "settle_via": "airwallex",
+                        "agentic_payment_data": {
+                          "fulfillment": [
+                            {
+                              "id": "ful_grp_1",
+                              "type": "shipping",
+                              "line_item_ids": [
+                                "line_item_1"
+                              ],
+                              "selected_destination_id": "ful_dest_1",
+                              "selected_option_id": "ful_opt_1"
+                            },
+                            {
+                              "id": "ful_grp_2",
+                              "type": "shipping",
+                              "line_item_ids": [
+                                "line_item_1"
+                              ],
+                              "selected_destination_id": "ful_dest_1",
+                              "selected_option_id": "ful_opt_2"
+                            },
+                            {
+                              "id": "ful_grp_3",
+                              "type": "pickup",
+                              "line_item_ids": [
+                                "line_item_3",
+                                "line_item_4"
+                              ],
+                              "selected_destination_id": "ful_dest_2",
+                              "selected_option_id": "ful_opt_1"
+                            }
+                          ]
+                        }
                       }
                     }
                   }
@@ -56537,6 +56744,136 @@
                 "created_at": "2025-01-31T07:02:15+00:00",
                 "updated_at": "2025-01-31T07:02:15+00:00",
                 "settle_via": "airwallex"
+              }
+            }
+          },
+          {
+            "key": "agentic",
+            "name": "Agentic Payment",
+            "method": "POST",
+            "uri": "/api/v1/pa/payment_intents/int_hkpdskz7vg1xc7uscdj/confirm",
+            "request_headers": {
+              "Authorization": "Bearer {{ACCESS_TOKEN}}",
+              "Content-Type": "application/json"
+            },
+            "request_body": {
+              "request_id": "d917ad44-6ae4-447e-a534-cce4ceebfd2e",
+              "payment_method": {
+                "type": "card",
+                "card": {
+                  "agentic_token": "tok_agentic_abc123"
+                }
+              },
+              "agentic_payment_data": {
+                "checkout_session_id": "agent_session_abc123",
+                "fulfillment": [
+                  {
+                    "id": "ful_grp_1",
+                    "type": "shipping",
+                    "line_item_ids": [
+                      "line_item_1"
+                    ],
+                    "selected_destination_id": "ful_dest_1",
+                    "selected_option_id": "ful_opt_1"
+                  },
+                  {
+                    "id": "ful_grp_2",
+                    "type": "shipping",
+                    "line_item_ids": [
+                      "line_item_1"
+                    ],
+                    "selected_destination_id": "ful_dest_1",
+                    "selected_option_id": "ful_opt_2"
+                  },
+                  {
+                    "id": "ful_grp_3",
+                    "type": "pickup",
+                    "line_item_ids": [
+                      "line_item_3",
+                      "line_item_4"
+                    ],
+                    "selected_destination_id": "ful_dest_2",
+                    "selected_option_id": "ful_opt_1"
+                  }
+                ]
+              },
+              "return_url": "https://www.airwallex.com"
+            },
+            "status_code": 200,
+            "reason_phrase": "OK",
+            "response_body": {
+              "id": "int_hkpdskz7vg1xc7uscdj",
+              "request_id": "d917ad44-6ae4-447e-a534-cce4ceebfd2e",
+              "amount": 100,
+              "currency": "USD",
+              "status": "SUCCEEDED",
+              "merchant_order_id": "D202503210001",
+              "descriptor": "Airwallex - Test Descriptor",
+              "metadata": {
+                "foo": "bar"
+              },
+              "created_at": "2025-01-31T06:57:10+00:00",
+              "updated_at": "2025-01-31T07:02:15+00:00",
+              "latest_payment_attempt": {
+                "id": "att_hkpdskz7vg1xc7uscdj",
+                "amount": 100,
+                "currency": "USD",
+                "payment_method": {
+                  "type": "card",
+                  "card": {
+                    "expiry_month": "03",
+                    "expiry_year": "2030",
+                    "name": "John Doe",
+                    "bin": "403550",
+                    "last4": "0008",
+                    "brand": "visa",
+                    "issuer_country_code": "US",
+                    "card_type": "CREDIT",
+                    "fingerprint": "AKvN4TqxI04SNFZ+oYRXaECtDA==",
+                    "number_type": "PAN"
+                  }
+                },
+                "payment_intent_id": "int_hkpdskz7vg1xc7uscdj",
+                "status": "AUTHORIZED",
+                "payment_method_transaction_id": "1234567890",
+                "provider_original_response_code": "00",
+                "authorization_code": "123456",
+                "captured_amount": 0,
+                "created_at": "2025-01-31T07:02:15+00:00",
+                "updated_at": "2025-01-31T07:02:15+00:00",
+                "settle_via": "airwallex",
+                "agentic_payment_data": {
+                  "fulfillment": [
+                    {
+                      "id": "ful_grp_1",
+                      "type": "shipping",
+                      "line_item_ids": [
+                        "line_item_1"
+                      ],
+                      "selected_destination_id": "ful_dest_1",
+                      "selected_option_id": "ful_opt_1"
+                    },
+                    {
+                      "id": "ful_grp_2",
+                      "type": "shipping",
+                      "line_item_ids": [
+                        "line_item_1"
+                      ],
+                      "selected_destination_id": "ful_dest_1",
+                      "selected_option_id": "ful_opt_2"
+                    },
+                    {
+                      "id": "ful_grp_3",
+                      "type": "pickup",
+                      "line_item_ids": [
+                        "line_item_3",
+                        "line_item_4"
+                      ],
+                      "selected_destination_id": "ful_dest_2",
+                      "selected_option_id": "ful_opt_1"
+                    }
+                  ]
+                }
               }
             }
           }
@@ -101548,7 +101885,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Amendment"
+                  "$ref": "#/components/schemas/Embedded_Finance_Amendment"
                 },
                 "examples": {
                   "default": {
@@ -106965,7 +107302,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Amendment"
+                  "$ref": "#/components/schemas/Embedded_Finance_Amendment"
                 },
                 "examples": {
                   "default": {
@@ -156827,6 +157164,67 @@
           }
         }
       },
+      "AgenticFulfillment": {
+        "type": "object",
+        "description": "A fulfillment group — one or more line items sharing the same fulfillment method (type) and delivery destination within an agentic checkout session.",
+        "required": [
+          "id",
+          "type",
+          "line_item_ids",
+          "selected_destination_id",
+          "selected_option_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The fulfillment group ID."
+          },
+          "line_item_ids": {
+            "type": "array",
+            "description": "Line item IDs included in this fulfillment group.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "selected_destination_id": {
+            "type": "string",
+            "description": "Identifier of the fulfillment destination selected by the agent (for example, a shipping address or pickup location) as defined by the merchant."
+          },
+          "selected_option_id": {
+            "type": "string",
+            "description": "Identifier of the fulfillment option selected by the agent (for example, a specific shipping tier or pickup time slot) as defined by the merchant for the destination."
+          },
+          "type": {
+            "type": "string",
+            "x-extensible-enum": [
+              "shipping",
+              "pickup",
+              "local_delivery",
+              "digital"
+            ],
+            "x-enumDescriptions": {
+              "shipping": "Carrier delivery to a specified address, with carrier, service level, and delivery estimates.",
+              "pickup": "In-store or curbside pickup at a physical location.",
+              "local_delivery": "Delivery by the merchant or a local courier within a geographic service area, with a delivery window.",
+              "digital": "Delivery of downloadable or streaming content (for example, a download or a digital key), with no physical shipment."
+            },
+            "description": "Fulfillment method type. Additional values may be introduced; handle unknown values gracefully."
+          }
+        }
+      },
+      "AgenticPaymentDataResponse": {
+        "type": "object",
+        "description": "Fulfillment outcome recorded on the Payment Attempt for agent-initiated payments. Contains the finalized fulfillment selections confirmed during the agentic payment flow.",
+        "properties": {
+          "fulfillment": {
+            "type": "array",
+            "description": "List of fulfillment groups for this payment. Each group bundles one or more line items sharing the same fulfillment method and destination. Present only on payment attempts initiated via an agentic checkout flow.",
+            "items": {
+              "$ref": "#/components/schemas/AgenticFulfillment"
+            }
+          }
+        }
+      },
       "DsData": {
         "type": "object",
         "properties": {
@@ -158977,6 +159375,9 @@
           "acquirer_reference_number": {
             "type": "string",
             "description": "Acquirer reference number of the card payment. Will be populated after the payment attempt has transitioned to the `CAPTURE_REQUESTED` or `SETTLED` status."
+          },
+          "agentic_payment_data": {
+            "$ref": "#/components/schemas/AgenticPaymentDataResponse"
           },
           "amount": {
             "type": "number",
@@ -161659,6 +162060,26 @@
             "type": "string",
             "format": "date-time",
             "description": "Last time at which this Payment Intent was updated or operated on."
+          }
+        }
+      },
+      "AgenticPaymentData": {
+        "type": "object",
+        "description": "Agentic payment data for agent-initiated payments.",
+        "required": [
+          "checkout_session_id"
+        ],
+        "properties": {
+          "checkout_session_id": {
+            "type": "string",
+            "description": "The agent session ID the agentic payment token is bound to. Must match the session restriction established when the payment credential was tokenized."
+          },
+          "fulfillment": {
+            "type": "array",
+            "description": "Finalized shopper fulfillment selection(s).",
+            "items": {
+              "$ref": "#/components/schemas/AgenticFulfillment"
+            }
           }
         }
       },
@@ -166833,35 +167254,6 @@
           }
         }
       },
-      "Amendment": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "A unique identifier of the amendment."
-          },
-          "primary_contact": {
-            "$ref": "#/components/schemas/PrimaryContact",
-            "description": "Contact information for the primary contact of the Airwallex specified account."
-          },
-          "status": {
-            "type": "string",
-            "description": "Status of the amendment. One of `PENDING`, `APPROVED`, `REJECTED`."
-          },
-          "store_details": {
-            "$ref": "#/components/schemas/StoreDetails",
-            "description": "Relevant information associated with the store you are applying payment solutions for."
-          },
-          "target": {
-            "type": "string",
-            "description": "Target of the amendment.",
-            "enum": [
-              "account_details.store_details",
-              "primary_contact"
-            ]
-          }
-        }
-      },
       "AccountWalletInfo": {
         "type": "object",
         "required": [
@@ -167974,6 +168366,35 @@
           }
         },
         "description": "Additional information about the transaction."
+      },
+      "Embedded_Finance_Amendment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "A unique identifier of the amendment."
+          },
+          "primary_contact": {
+            "$ref": "#/components/schemas/PrimaryContact",
+            "description": "Contact information for the primary contact of the Airwallex specified account."
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the amendment. One of `PENDING`, `APPROVED`, `REJECTED`."
+          },
+          "store_details": {
+            "$ref": "#/components/schemas/StoreDetails",
+            "description": "Relevant information associated with the store you are applying payment solutions for."
+          },
+          "target": {
+            "type": "string",
+            "description": "Target of the amendment.",
+            "enum": [
+              "account_details.store_details",
+              "primary_contact"
+            ]
+          }
+        }
       },
       "Embedded_Finance_Offboarding": {
         "type": "object",
@@ -176793,7 +177214,9 @@
         "Payouts > Batch Transfers",
         "Payouts > Beneficiaries",
         "Payouts > Payers",
-        "Payouts > Transfers"
+        "Payouts > Transfers",
+        "Tax > Beneficiary Tax Profiles",
+        "Tax > Beneficiary Tax Statements"
       ]
     },
     {
